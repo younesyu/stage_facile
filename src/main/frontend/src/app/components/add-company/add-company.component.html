@@ -1,0 +1,52 @@
+<mat-card class="main-container">
+    <mat-card-header>
+      <mat-card-title>Ajouter une entreprise</mat-card-title>
+      <mat-card-subtitle>* Champs obligatoire</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="companyForm">
+        <hr>
+        <mat-form-field>
+          <mat-label>Nom de l'entreprise</mat-label>
+          <input matInput formControlName="name" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Industrie, domaine, secteur d'activité...</mat-label>
+            <mat-select formControlName="industry">
+                <mat-option *ngFor="let industry of industries" [value]="industry">
+                {{ industry.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Adresse du siège social</mat-label>
+          <input matInput formControlName="headOfficeAddress" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Pays</mat-label>
+          <mat-select formControlName="country" required>
+            <mat-option *ngFor="let country of countries" [value]="country">
+              {{ country }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Ville</mat-label>
+          <input matInput formControlName="city">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Code postal</mat-label>
+          <input matInput formControlName="postalCode" required>
+          <mat-error *ngIf="postalCode.invalid && postalCode.touched">
+            Le code postal doit être un nombre composé de 5 chiffres. (ex: 13001)
+          </mat-error>
+        </mat-form-field>
+        <br><br><br>
+        <button mat-raised-button [disabled]="companyForm.invalid" color="primary" (click)="onSubmit()">Ajouter l'entreprise</button>
+      </form>
+    </mat-card-content>
+  </mat-card>

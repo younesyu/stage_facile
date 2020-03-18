@@ -1,0 +1,28 @@
+<div class="container">
+  <br>
+  <h1 id="header">Stages</h1>
+  <br>
+  <div class="list-group">
+    <a *ngFor="let internship of internships | paginate: {
+    itemsPerPage: 5,
+    currentPage: p,
+    totalItems: internships.length}" [routerLink]="['../internship', internship.id]" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ internship.company.name }} - {{ internship.function }}</h5>
+      </div>
+      <p class="mb-1">{{ internship.description | slice:0:200 }}</p>
+      <small class="text-muted">{{ internship.beginDate | date:'dd/MM/yyyy' }} - {{ internship.endDate | date:'dd/MM/yyyy' }}</small>
+    </a>
+    <pagination-controls
+                      (pageChange)="p = $event"
+                      (pageBoundsCorrection)="p = 1"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel=""
+                      nextLabel=""
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page">
+</pagination-controls>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="container">
+    <br>
+    <h1 id="header">Entreprises</h1>
+    <br>
+    <div class="list-group">
+      <a *ngFor="let company of companies | paginate: {
+      itemsPerPage: 5,
+      currentPage: p,
+      totalItems: companies.length}" [routerLink]="['../company', company.id]" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ company.name }} - {{ company.industry.name }}</h5>
+        </div>
+        <p class="mb-1">{{ company.headOfficeAddress }}</p>
+        <small class="text-muted">{{ company.postalCode }} {{ company.city }}, {{ company.country }}</small>
+      </a>
+      <pagination-controls
+                        (pageChange)="p = $event"
+                        (pageBoundsCorrection)="p = 1"
+                        directionLinks="true"
+                        autoHide="true"
+                        responsive="true"
+                        previousLabel=""
+                        nextLabel=""
+                        screenReaderPaginationLabel="Pagination"
+                        screenReaderPageLabel="page">
+  </pagination-controls>
+    </div>
+  </div>
