@@ -10,6 +10,9 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        &nbsp; &nbsp;  <img src="../../../assets/user.svg" alt="" width="18" height="18" />
+        &nbsp; Effectué par <a [routerLink]="['../../students', internship.user.id]" style="color: black; text-decoration: underline;">{{ internship.user.firstName }} {{ internship.user.lastName }}</a>
+        <br><br>
         &nbsp; &nbsp;  <img src="../../../assets/company.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.company.name }} (<a [routerLink]="['../../company', internship.company.id]">Voir les autres stages effectués à {{ internship.company.name }}</a>)
         <br><br>

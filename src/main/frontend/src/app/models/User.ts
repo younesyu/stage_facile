@@ -1,3 +1,5 @@
+import { Internship } from './Internship';
+
 export class User {
     id: number;
     password:string;
@@ -7,4 +9,5 @@ export class User {
     birthDate: Date;
     gender: boolean;
     role: String;
+    internships: Internship[];
 }

@@ -44,6 +44,7 @@ import { BoardAdminComponent } from './components/board-admin/board-admin.compon
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
+import { StudentDetailsComponent } from './components/student-details/student-details.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { AuthentificationComponent } from './components/authentification/authent
     BoardModeratorComponent,
     BoardUserComponent,
     AuthentificationComponent,
+    StudentDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -46,6 +46,11 @@ public class InternshipController {
 		internshipService.save(internship);
     }
 	
+	@GetMapping("/deleteAll")
+	void deleteAll() {
+		internshipService.findAll().forEach(internshipService::delete);
+	}
+	
 	@GetMapping("/update")
     public Internship update() {
     	Optional<Internship> internship = this.internshipService.find(2L);

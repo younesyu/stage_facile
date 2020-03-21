@@ -29,4 +29,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 			+ "WHERE u.role.id = 2"
 			+ "AND (u.validated = false OR u.validated IS NULL)")
 	List<User> getNonValidatedUsers();
+	
 }

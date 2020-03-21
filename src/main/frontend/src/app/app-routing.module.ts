@@ -15,10 +15,12 @@ import { BoardUserComponent } from './components/board-user/board-user.component
 import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './components/board-admin/board-admin.component';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
+import { StudentDetailsComponent } from './components/student-details/student-details.component';
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'internships', component: InternshipListComponent },
   { path: 'companies', component: CompanyListComponent },
   { path: 'add-internship', component: AddInternshipComponent },

@@ -3,6 +3,7 @@ package com.stage_facile.stage_facile.controllers;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.stage_facile.stage_facile.models.ERole;
+import com.stage_facile.stage_facile.models.Internship;
 import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.services.UserService;
 
@@ -35,7 +38,12 @@ public class UserController {
 	public ModelAndView welcome(Map<String, Object> model) {
 		return new ModelAndView("redirect:/users/all", model);
 	}
- 
+
+    @GetMapping("/load")
+    public void loadUsers() {
+        this.userService.loadUsers();
+    }
+    
     @GetMapping("/all")
     public List<User> getUsers() {
         return this.userService.findAll();
@@ -45,15 +53,31 @@ public class UserController {
     void addUser(@RequestBody User user) {
         userService.save(user);
     } 
-    
+
     @PostMapping("/delete")
-    void deleteUser(@RequestBody User user) {
+    public void deleteUser(@RequestBody User user) {
         userService.delete(user);
+    }
+    
+    @GetMapping("/deleteAll")
+    public void deleteUsers() {
+        userService.findAll().forEach(userService::delete);
     }
     
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable Long id) {
     	return this.userService.find(id);
+    }
+    
+    @GetMapping("/user")
+    public Optional<User> findByEmail(@RequestParam String email) {
+    	return this.userService.findByEmail(email);
+    }
+    
+    @GetMapping("/{id}/internships")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public Set<Internship> findInternshipsById(@PathVariable Long id) {
+        return userService.getInternships(id);
     }
 
     @GetMapping("/students")

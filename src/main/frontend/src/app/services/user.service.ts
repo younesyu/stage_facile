@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/User';
+import { TokenStorageService } from './token-storage.service';
 
 const API_URL = 'http://localhost:8080/api/test/';
 const usersUrl = 'http://localhost:8080/users/';
@@ -11,7 +12,8 @@ const usersUrl = 'http://localhost:8080/users/';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private tokenStorage: TokenStorageService) { }
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
@@ -28,6 +30,23 @@ export class UserService {
   getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', { responseType: 'text' });
   }
+  
+  findUserByEmail(email: string): Observable<User> {
+    let params = new HttpParams();
+    params = params.append('email', email);
+    
+    return this.http.get<User>(usersUrl + 'user', {params: params});
+  }
+
+  public getLoggedInUser(): User {
+    let user: User;
+    let userToken = this.tokenStorage.getUser();
+    this.findUserByEmail(userToken.username).subscribe(data => {
+      user = data;
+    });
+
+    return user;
+  }
 
   public findAll(): Observable<User[]> {
     return this.http.get<User[]>(usersUrl + "all");
@@ -35,6 +54,10 @@ export class UserService {
 
   public findStudents(): Observable<User[]> {
     return this.http.get<User[]>(usersUrl + "students");
+  }
+
+  public get(id: number): Observable<User> {
+    return this.http.get<User>(usersUrl + id);
   }
 
   public findModerators(): Observable<User[]> {
@@ -56,4 +79,6 @@ export class UserService {
   delete(user: User) {
     return this.http.post<User>(usersUrl + "delete", user);
   }
+
+
 }

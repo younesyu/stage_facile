@@ -8,6 +8,7 @@ import { Industry } from 'src/app/models/Industry';
 import { IndustryService } from 'src/app/services/industry.service';
 import { InternshipService } from 'src/app/services/internship.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-internship',
@@ -26,6 +27,7 @@ export class AddInternshipComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute, 
     private router: Router, 
+    private userService: UserService,
     private internshipService: InternshipService,
     private companyService: CompanyService, 
     private industryService: IndustryService) { }
@@ -79,7 +81,10 @@ export class AddInternshipComponent implements OnInit {
       foundBy: '',
       company: '',
       industry: '',
+      user: '',
     });
+
+    this.internshipForm.get('user').setValue(this.userService.getLoggedInUser());
   }
   get conventionReference() {
     return this.internshipForm.get('conventionReference')

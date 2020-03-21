@@ -27,7 +27,7 @@ public @Data class User {
 	private @ManyToOne Role role;
 	private Boolean validated;
 
-	public User() {}
+	public User() {} 
 	
 	public User(String email, String password, String firstName, String lastName, 
 			Date birthDate, Boolean gender) {
@@ -37,11 +37,5 @@ public @Data class User {
 		this.lastName = lastName;
 		this.birthDate = birthDate;
 		this.gender = gender;
-	}
-	
-	public void validateModerator(User user) {
-		if(this.role.getName().equals(ERole.ROLE_ADMIN)) {
-			user.setValidated(true);
-		}
 	}
 }

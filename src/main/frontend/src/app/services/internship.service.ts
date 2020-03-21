@@ -7,6 +7,7 @@ import { Internship } from '../models/Internship';
   providedIn: 'root'
 })
 export class InternshipService {
+
   private internshipsUrl: string;
   
   constructor(private http: HttpClient) {
@@ -25,5 +26,8 @@ export class InternshipService {
     return this.http.post<Internship>(this.internshipsUrl + "add", internship);
   }
 
+  getUserInternships(id: number): Observable<Internship[]> {
+    return this.http.get<Internship[]>("http://localhost:8080/users/" + id + "/internships");
+  }
 
 }
