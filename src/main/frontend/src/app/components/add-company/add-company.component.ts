@@ -13,8 +13,6 @@ import { Industry } from 'src/app/models/Industry';
   styleUrls: ['./add-company.component.sass']
 })
 export class AddCompanyComponent implements OnInit {
-
-  private company: Company;
   companyForm: FormGroup;
 
   countries: string[];
@@ -51,16 +49,7 @@ export class AddCompanyComponent implements OnInit {
   }
 
   onSubmit():void {
-    this.company = new Company();
-
-    this.company.name = this.companyForm.get('name').value;
-    this.company.industry = this.companyForm.get('industry').value;
-    this.company.headOfficeAddress = this.companyForm.get('headOfficeAddress').value;
-    this.company.postalCode = this.companyForm.get('postalCode').value;
-    this.company.city = this.companyForm.get('city').value;
-    this.company.country = this.companyForm.get('country').value;
-    
-    this.companyService.save(this.company).subscribe(result => this.gotoCompanyList());
+    this.companyService.save(this.companyForm.value).subscribe(result => this.gotoCompanyList());
     
   }
 

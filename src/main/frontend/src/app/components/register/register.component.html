@@ -1,0 +1,65 @@
+<mat-card-header>
+  <mat-card-title>
+    <br><br>
+    Inscription
+  </mat-card-title>
+  <mat-card-subtitle>* Champs obligatoire</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <form [formGroup]="registerForm">
+    <hr>
+    <br>      
+    <mat-form-field>
+      <mat-label>Vous êtes...</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role }}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="role === 'Enseignant'">Les comptes pour les enseignants doivent être validés par un administrateur. <br></mat-hint>
+    </mat-form-field>
+    <br *ngIf="role == 'Enseignant'">
+    <br>
+    <mat-form-field>
+      <mat-label>Adresse électronique</mat-label>
+      <input type="email" matInput formControlName="username" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput formControlName="password" required>
+    </mat-form-field>
+    <br>
+    <mat-radio-group formControlName="gender" aria-label="Civilité">
+      <mat-label class="text-muted">Civilité</mat-label>
+      <br>
+      <mat-radio-button value="true" class="text-muted">Monsieur</mat-radio-button>
+      <span style="margin-right: 100px;"></span>
+      <mat-radio-button value="false" class="text-muted">Madame</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field>
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Date de naissance</mat-label>
+      <input required matInput formControlName="birthDate" [matDatepicker]="birthDate" (dateChange)="dateCheck()">
+      <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
+      <mat-datepicker #birthDate></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <br><br><br>
+    <button mat-raised-button [disabled]="registerForm.invalid" color="primary" (click)="onSubmit()">S'inscrire</button>
+  </form>
+</mat-card-content>
+
+<div class="alert alert-success" *ngIf="isSuccessful">
+  Inscription réussie! Redirection vers la page d'accueil...
+</div>

@@ -1,0 +1,16 @@
+<div class="landingpage">
+  <div class="title">
+    Un portail de stages pour tous les étudiants.
+  </div>
+  <div class="subtitle text-muted">
+    StageFacile est un projet de fin d'études du Master Informatique - Ingénierie du Logiciel et des Données à l'Université d'Aix-Marseille.
+  </div>
+  <div class="buttons">
+    <button *ngIf="!isLoggedIn" mat-stroked-button class="signup-button" onclick="window.location.href = '/authenticate';">Identifiez-vous pour profiter des fonctionnalités.</button>
+    <br>
+    <button *ngIf="isLoggedIn" mat-stroked-button class="signup-button" onclick="window.location.href = '/internships';">Stages</button>
+    <span style="margin-right: 150px;"></span>
+    <button *ngIf="isLoggedIn" mat-stroked-button class="signup-button" onclick="window.location.href = '/companies';">Entreprises</button>
+    
+  </div>
+</div>

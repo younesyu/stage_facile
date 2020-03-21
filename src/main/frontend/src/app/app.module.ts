@@ -20,6 +20,12 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio'; 
+import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatTableModule } from '@angular/material/table'; 
+
+import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 /* App components */
 import { CreateUserFormComponent } from './components/create-user-form/create-user-form.component';
@@ -30,7 +36,14 @@ import { AddInternshipComponent } from './components/add-internship/add-internsh
 import { InternshipDetailsComponent } from './components/internship-details/internship-details.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
 import { AddCompanyComponent } from './components/add-company/add-company.component';
-
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BoardAdminComponent } from './components/board-admin/board-admin.component';
+import { BoardModeratorComponent } from './components/board-moderator/board-moderator.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { AuthentificationComponent } from './components/authentification/authentification.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +55,15 @@ import { AddCompanyComponent } from './components/add-company/add-company.compon
     AddInternshipComponent,
     InternshipDetailsComponent,
     CompanyDetailsComponent,
-    AddCompanyComponent
+    AddCompanyComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent,
+    AuthentificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,8 +84,12 @@ import { AddCompanyComponent } from './components/add-company/add-company.compon
     MatChipsModule,
     MatDatepickerModule,
     MatListModule,
+    MatRadioModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatTableModule,
   ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule, authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

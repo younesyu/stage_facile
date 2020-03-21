@@ -2,7 +2,6 @@ package com.stage_facile.stage_facile.services.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +14,6 @@ import com.stage_facile.stage_facile.services.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
-	
-	public void loadUsers() {
-		User user1 = new User();
-    	user1.setFirstName("John");
-    	user1.setLastName("Doe");
-    	
-    	User user2 = new User();
-    	user2.setFirstName("Jane");
-    	user2.setLastName("Doe");
-    	
-    	Stream.of(user1, user2).forEach(userRepository::save);
-	}
 	
 	public List<User> findAll() {
 		return (List<User>) userRepository.findAll();
@@ -56,4 +43,26 @@ public class UserServiceImpl implements UserService {
 			userRepository.save(u);
 		});
 	}
+
+	@Override
+	public List<User> getNonValidatedMods() {
+		return userRepository.getNonValidatedUsers();
+	}
+
+	@Override
+	public List<User> findStudents() {
+		return userRepository.findStudents();
+	}
+	
+	@Override
+	public List<User> findModerators() {
+		return userRepository.findModerators();
+	}
+
+	@Override
+	public List<User> findAdmins() {
+		return userRepository.findAdmins();
+	}
+	
+	
 }

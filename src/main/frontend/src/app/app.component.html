@@ -1,4 +1,26 @@
-<app-navbar></app-navbar>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="navbar-brand">Stage Facile</div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ">
+        <a class="nav-item nav-link" href="/home">Accueil</a>
+        <a class="nav-item nav-link" href="/internships" *ngIf="isLoggedIn">Stages</a>
+        <a class="nav-item nav-link" href="/users" *ngIf="isLoggedIn">Etudiants</a>
+        <a class="nav-item nav-link" href="/companies" *ngIf="isLoggedIn">Entreprises</a>
+        <a class="nav-item nav-link" href="/add-internship" *ngIf="isLoggedIn">Ajouter un stage</a>
+        <a class="nav-item nav-link" href="/add-company" *ngIf="isLoggedIn">Ajouter une entreprise</a>
+        <a class="nav-item nav-link" href="/admin" *ngIf="showAdminBoard">Administrateur</a>
+        <a class="nav-item nav-link" href="/mod" *ngIf="showModeratorBoard">Tableau de contrôle</a>
+        <a class="nav-item nav-link" href="/my-internships" *ngIf="showUserBoard">Mes stages</a>
+        <a class="nav-item nav-link" href="/profile" *ngIf="isLoggedIn">Profil</a>
+        <a class="nav-item nav-link" href="/authenticate" *ngIf="!isLoggedIn">S'identifier</a>
+        <a class="nav-item nav-link" href *ngIf="isLoggedIn" (click)="logout()">Se déconnecter</a>
+      </div>
+    </div>
+  </nav>
+<!-- <app-navbar></app-navbar> -->
 <div id="app">
     <router-outlet></router-outlet>
 </div>

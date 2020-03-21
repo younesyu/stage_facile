@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.stage_facile.stage_facile.models.ERole;
 import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.services.UserService;
 
@@ -31,37 +33,72 @@ public class UserController {
     
     @RequestMapping("/")
 	public ModelAndView welcome(Map<String, Object> model) {
-		this.loadUsers();
 		return new ModelAndView("redirect:/users/all", model);
 	}
-    
-    @GetMapping("/load")
-    public void loadUsers() {
-    	this.userService.loadUsers();
-    }
  
     @GetMapping("/all")
     public List<User> getUsers() {
         return this.userService.findAll();
     }
- 
+    
     @PostMapping("/add")
     void addUser(@RequestBody User user) {
         userService.save(user);
-    }
+    } 
     
-    @GetMapping("/update")
-    public User update() {
-    	Optional<User> user = this.userService.find(2L);
-    	user.ifPresent(u -> {
-    		u.setFirstName("Houari");
-    		this.userService.save(u);
-    	});
-    	return this.userService.find(2L).get();
+    @PostMapping("/delete")
+    void deleteUser(@RequestBody User user) {
+        userService.delete(user);
     }
     
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable Long id) {
     	return this.userService.find(id);
+    }
+
+    @GetMapping("/students")
+    public List<User> findStudents() {
+    	return this.userService.findStudents();
+    }
+
+    @GetMapping("/moderators")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<User> findModerators() {
+    	return this.userService.findModerators();
+    }
+    
+    @GetMapping("/admins")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<User> findAdmins() {
+    	return this.userService.findAdmins();
+    }
+    
+    @GetMapping("/nonValidatedMods")
+	@PreAuthorize("hasRole('ADMIN')")
+    public List<User> nonValidatedMods() {
+    	return this.userService.getNonValidatedMods();
+    }
+    
+    @PostMapping("/validate")
+	@PreAuthorize("hasRole('ADMIN')")
+    public void validateMod(@RequestBody User moderator) {
+    	System.err.println("Validating user of id " + moderator.getId() + "...");
+    	this.userService.find(moderator.getId()).ifPresent(user -> {
+    		if(user.getRole().getName().equals(ERole.ROLE_MODERATOR)) {
+    			user.setValidated(true);
+    			userService.save(user);
+    		}
+    	});
+    }
+    
+    @GetMapping("/unvalidateAll")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void unvalidate() {
+    	this.userService.findAll().forEach(user -> {
+    		if (user.getRole().getName().equals(ERole.ROLE_MODERATOR)) {
+    			user.setValidated(false);
+    			userService.save(user);
+    		}
+    	});
     }
 }

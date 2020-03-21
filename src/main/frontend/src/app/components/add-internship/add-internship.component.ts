@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./add-internship.component.sass']
 })
 export class AddInternshipComponent implements OnInit {
-  internship: Internship;
   internshipForm: FormGroup;
 
   countries: string[];
@@ -67,7 +66,7 @@ export class AddInternshipComponent implements OnInit {
       description : '',
       location : '',
       stipend : ['', [
-        Validators.pattern("^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$"),
+        Validators.pattern("^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9]?)?$"),
         Validators.maxLength(20),
       ]],
       conventionReference: ['', [
@@ -102,26 +101,7 @@ export class AddInternshipComponent implements OnInit {
   }
 
   onSubmit():void {
-    this.internship = new Internship();
-
-    this.internship.beginDate = this.internshipForm.get('beginDate').value;
-    this.internship.endDate = this.internshipForm.get('endDate').value;
-    this.internship.function = this.internshipForm.get('function').value;
-    this.internship.description = this.internshipForm.get('description').value;
-    this.internship.location = this.internshipForm.get('location').value;
-    this.internship.stipend = this.internshipForm.get('stipend').value;
-    this.internship.conventionReference = this.internshipForm.get('conventionReference').value;
-    this.internship.experienceLevel = this.internshipForm.get('experienceLevel').value;
-    this.internship.managers = this.internshipForm.get('managers').value;
-    this.internship.foundBy = this.internshipForm.get('foundBy').value;
-    if(this.internshipForm.get('company').value !== '')
-      this.internship.company = this.internshipForm.get('company').value;
-    if(this.internshipForm.get('industry').value !== '')
-      this.internship.industry = this.internshipForm.get('industry').value;
-    else
-      this.internship.industry = null;
-
-    this.internshipService.save(this.internship).subscribe(result => this.gotoInternshipList());
+    this.internshipService.save(this.internshipForm.value).subscribe(result => this.gotoInternshipList());
     
   }
 
