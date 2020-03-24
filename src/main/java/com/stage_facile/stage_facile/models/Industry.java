@@ -6,7 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-
+/**
+ * Entité secteur d'activité.
+ */
 @Entity
 @Table(name = "industries")
 public @Data class Industry {

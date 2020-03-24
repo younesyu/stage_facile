@@ -4,38 +4,7 @@
       <mat-tab style="width: 100%;" label="Etudiants">
         <mat-card>
           <mat-card-content>
-
-            <table mat-table [dataSource]="studentsDataSource" matSort class="mat-elevation-z8" style="width: 100%;">
-
-              <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.firstName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lastName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.lastName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Adresse électronique </th>
-                <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Supprimer </th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-raised-button color="warn" (click)="delete(element)">Supprimer</button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsUsers"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsUsers;"></tr>
-            </table>
-
-            <mat-paginator [length]="students.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-
+            <app-admin-user-list></app-admin-user-list>
           </mat-card-content>
         </mat-card>
       </mat-tab>
@@ -43,45 +12,7 @@
       <mat-tab style="width: 100%;" label="Enseignants">
         <mat-card>
           <mat-card-content>
-            <table mat-table [dataSource]="moderatorsDataSource" matSort class="mat-elevation-z8" style="width: 100%;">
-
-              <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.firstName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lastName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.lastName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Adresse électronique </th>
-                <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="validate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Validé </th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-raised-button *ngIf="element.validated" color="warn" style="background-color: rgb(81, 187, 136)">Validé</button>
-                  <button mat-raised-button *ngIf="!element.validated" color="warn" (click)="validateMod(element)">Non validé</button>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef> Supprimer </th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-raised-button color="warn" (click)="delete(element)">Supprimer</button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsMods"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsMods;"></tr>
-            </table>
-
-            <mat-paginator [length]="moderators.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-
+            <app-admin-mod-list></app-admin-mod-list>
           </mat-card-content>
         </mat-card>
       </mat-tab>
@@ -89,38 +20,7 @@
       <mat-tab style="width: 100%;" label="Administrateurs">
         <mat-card>
           <mat-card-content>
-            <table mat-table [dataSource]="adminsDataSource" class="mat-elevation-z8" style="width: 100%;">
-
-              <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef> Prénom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.firstName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lastName">
-                <th mat-header-cell *matHeaderCellDef> Nom </th>
-                <td mat-cell *matCellDef="let element"> {{ element.lastName }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef> Adresse électronique </th>
-                <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef> Supprimer </th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-raised-button color="warn" *ngIf="!self(element)"
-                    (click)="delete(element)">Supprimer</button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsAdmins"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumnsAdmins;"></tr>
-            </table>
-
-            <mat-paginator [length]="admins.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-
+            <app-admin-admin-list></app-admin-admin-list>
           </mat-card-content>
         </mat-card>
       </mat-tab>

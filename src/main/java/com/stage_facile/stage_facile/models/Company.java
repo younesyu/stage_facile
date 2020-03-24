@@ -7,7 +7,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
-
+/**
+ * Entité entreprise, chaque entreprise travaille sur un secteur (Industry) défini.
+ *
+ */
 @Entity
 @Table(name = "companies")
 public @Data class Company {

@@ -26,7 +26,10 @@ import com.stage_facile.stage_facile.security.payload.request.SignupRequest;
 import com.stage_facile.stage_facile.security.payload.response.JwtResponse;
 import com.stage_facile.stage_facile.security.payload.response.MessageResponse;
 import com.stage_facile.stage_facile.security.services.UserDetailsImpl;
-
+/**
+ * Contrôleur pour l'API authentification.
+ *
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")
@@ -46,6 +49,14 @@ public class AuthController {
 	@Autowired
 	JwtUtils jwtUtils;
 
+	/**
+	 * Authentifie l'utilisateur en utilisant les identifiants
+	 * passés en paramètre.
+	 * @param loginRequest requête contenant les identifiants.
+	 * @return Une requête 200 OK si l'utilisateur est authentifié.
+	 * Une bad request est renvoyée si les identifiants sont incorrects,
+	 * ou s'ils appartiennent à un compte modérateur non validé.
+	 */
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -54,6 +65,8 @@ public class AuthController {
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		String role = userDetails.getAuthorities().iterator().next().getAuthority(); 	
+		
+		// Vérifie si le compte modérateur est validé
 		if (role.equals("ROLE_MODERATOR")) {
 			User mod = userRepository.findById(userDetails.getId()).get();
 			if(mod.getValidated() == false) {
@@ -67,17 +80,20 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), role));
 	}
 
+	/**
+	 * Inscrit dans la base de données l'utilisateur dont les informations sont passées
+	 * dans la requête en paramètres.
+	 * @param signUpRequest
+	 * @return Une requête 200 OK si l'utilisateur est enregistré.
+	 * @throws RuntimeException si les rôles ne sont pas chargés en base
+	 */
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByEmail(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Erreur: Cette adresse électronique est déjà utilisée."));
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-		}
-
-		// Create new user's account
+		// Crée le nouveau compte utilisateur
 		User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getBirthDate(),
 				signUpRequest.getGender());
@@ -87,24 +103,23 @@ public class AuthController {
 
 		if (strRoles == null) {
 			role = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));
 		} else {
 			if (strRoles.equals("admin")) {
 				role = roleRepository.findByName(ERole.ROLE_ADMIN)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));
 			} else if (strRoles.equals("mod")) {
 				role = roleRepository.findByName(ERole.ROLE_MODERATOR)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));
 			} else {
 				role = roleRepository.findByName(ERole.ROLE_USER)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));
 			}
 		}
 
 		user.setRole(role);
 		userRepository.save(user);
-		System.err.println("great");
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse("Utilisateur créé avec succès!"));
 	}
 
 }

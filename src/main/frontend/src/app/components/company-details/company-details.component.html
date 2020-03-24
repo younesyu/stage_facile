@@ -1,4 +1,10 @@
 <mat-card class="main-container">
+  <div align="right">
+    <a mat-raised-button color="primary" [routerLink]="['../edit', company.id]">Editer</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a mat-raised-button color="warn" (click)="openDialog()">Supprimer</a>
+    <br><br>
+  </div>
   <mat-card-header>
     <mat-card class="header">
       <mat-card-header>
@@ -29,9 +35,9 @@
             itemsPerPage: 5,
             currentPage: p,
             totalItems: internships.length}" role="listitem">
-            <small class="text-muted">{{ internship.conventionReference }}</small>
-            <br>&nbsp; &nbsp;
-            <div><a [routerLink]="['../../internship', internship.id]">{{ internship.function }}</a></div>
+          <small class="text-muted">{{ internship.conventionReference }}</small>
+          <br>&nbsp; &nbsp;
+          <div><a [routerLink]="['../../internship', internship.id]">{{ internship.function }}</a></div>
         </mat-list-item>
       </mat-list>
       <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"

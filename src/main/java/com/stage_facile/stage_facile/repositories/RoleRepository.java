@@ -10,5 +10,10 @@ import com.stage_facile.stage_facile.models.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
+	/**
+	 * Trouver un rôle par son nom.
+	 * @param name
+	 * @return Le rôle si présent en base.
+	 */
 	Optional<Role> findByName(ERole name);
 }

@@ -38,14 +38,9 @@ export class UserService {
     return this.http.get<User>(usersUrl + 'user', {params: params});
   }
 
-  public getLoggedInUser(): User {
-    let user: User;
+  public getLoggedInUser(): Observable<User> {
     let userToken = this.tokenStorage.getUser();
-    this.findUserByEmail(userToken.username).subscribe(data => {
-      user = data;
-    });
-
-    return user;
+    return this.findUserByEmail(userToken.username);
   }
 
   public findAll(): Observable<User[]> {

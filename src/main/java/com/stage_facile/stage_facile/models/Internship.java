@@ -11,13 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import com.sun.istack.Nullable;
 
+import lombok.Data;
+/**
+ * Entité stage.
+ * Tout stage est lié à un utilisateur (typiquement un étudiant).
+ */
 @Entity
 @Table(name = "internships")
 public @Data class Internship {
 	private @Id @GeneratedValue Long id;
-	private @ManyToOne User user;
+	private @ManyToOne @Nullable User user;
 	private LocalDate beginDate;
 	private LocalDate endDate;
 	private String function;
@@ -54,4 +59,10 @@ public @Data class Internship {
 		this.industry = industry;
 	}
 	
+	public void supressNullValidate() {
+		if(this.validated == null) {
+			this.validated = false;
+		}
+			
+	}
 }

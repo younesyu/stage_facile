@@ -1,6 +1,6 @@
 <mat-card class="main-container">
   <mat-card-header>
-    <mat-card-title>Ajouter un stage</mat-card-title>
+    <mat-card-title>{{ title }}</mat-card-title>
     <mat-card-subtitle>* Champs obligatoire</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
@@ -26,16 +26,18 @@
       <br>
       <mat-form-field>
         <mat-label>Date de début</mat-label>
-        <input required matInput formControlName="beginDate" [matDatepicker]="beginDate" (dateChange)="dateCompare()">
+        <input required matInput formControlName="beginDate" [matDatepicker]="beginDate">
         <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
         <mat-datepicker #beginDate></mat-datepicker>
+        <mat-error *ngIf="dateCompare()">La date de fin du stage doit être ultérieure à la date de début.</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
         <mat-label>Date de fin</mat-label>
-        <input required matInput formControlName="endDate" [matDatepicker]="endDate" (dateChange)="dateCompare()">
+        <input required matInput formControlName="endDate" [matDatepicker]="endDate">
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
         <mat-datepicker #endDate></mat-datepicker>
+        <mat-error *ngIf="dateCompare()">La date de fin du stage doit être ultérieure à la date de début.</mat-error>
       </mat-form-field>
       <br>      
       <mat-form-field>
@@ -55,7 +57,7 @@
       <mat-form-field>
         <mat-label>Niveau requis</mat-label>
         <mat-select formControlName="experienceLevel">
-          <mat-option *ngFor="let value of values" [value]="value">
+          <mat-option *ngFor="let value of experienceLevels" [value]="value">
             {{ value }}
           </mat-option>
         </mat-select>
@@ -85,7 +87,7 @@
       <br>
       <mat-form-field>
         <mat-label>Organisme d'accueil</mat-label>
-        <mat-select required formControlName="company" >
+        <mat-select required formControlName="company">
           <mat-option *ngFor="let company of companies" [value]="company">
             {{ company.name }}
           </mat-option>
@@ -101,7 +103,7 @@
         </mat-select>
       </mat-form-field>
       <br><br><br>
-      <button mat-raised-button [disabled]="internshipForm.invalid" color="primary" (click)="onSubmit()">Ajouter un stage</button>
+      <button mat-raised-button [disabled]="internshipForm.invalid" color="primary" (click)="onSubmit()">{{ title }}</button>
     </form>
   </mat-card-content>
 </mat-card>

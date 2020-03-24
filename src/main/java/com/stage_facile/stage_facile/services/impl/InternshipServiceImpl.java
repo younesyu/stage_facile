@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.models.Company;
 import com.stage_facile.stage_facile.models.ERole;
 import com.stage_facile.stage_facile.models.Industry;
 import com.stage_facile.stage_facile.models.Internship;
+import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.parser.OdsParser;
 import com.stage_facile.stage_facile.repositories.CompanyRepository;
 import com.stage_facile.stage_facile.repositories.IndustryRepository;
@@ -117,6 +117,13 @@ public class InternshipServiceImpl implements InternshipService{
 	public List<Internship> findValidated() {
 		return this.findAll().stream()
 				.filter(Internship::getValidated)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Internship> findNonValidated() {
+		return this.findAll().stream()
+				.filter(i -> !i.getValidated())
 				.collect(Collectors.toList());
 	}
 

@@ -1,35 +1,65 @@
 <mat-card class="main-container">
-    <mat-card-header>
-      <mat-card class="header">
-        <mat-card-header>
-          <mat-card-title>
-            Profil
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          
-        </mat-card-content>
-      </mat-card>
-  
-    </mat-card-header>
-    <mat-card-content>
-      <hr><br><br>
-      <mat-card-title>&nbsp; &nbsp;Stages effectués par {{ user.firstName }} {{ user.lastName }}</mat-card-title>
-      <mat-card class="description">
-        <mat-list role="list">
-          <mat-list-item *ngFor="let internship of user.internships  | paginate: {
+  <mat-card-header>
+    <mat-card class="header">
+      <mat-card-header>
+        <mat-card-title>
+          Profil
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <span>&nbsp; &nbsp; <img *ngIf="user.gender === true || user.gender === null" src="../../assets/user.svg" alt=""
+            width="18" height="18" />
+          <img *ngIf="user.gender === false" src="../../assets/girl.svg" alt="" width="18" height="18" />
+          &nbsp;{{ user.firstName }} {{ user.lastName }}
+          <br><br> </span>
+        <span *ngIf="user.birthDate"> &nbsp; <img src="../../assets/calendar.svg" alt="" width="18" height="18" />
+          &nbsp; {{ user.birthDate }}
+          <br><br></span>
+        <span *ngIf="user.email">&nbsp; <img src="../../assets/mail.svg" alt="" width="18" height="18" />
+          &nbsp; {{ user.email }}
+          <br><br> </span>
+      </mat-card-content>
+    </mat-card>
+
+  </mat-card-header>
+  <mat-card-content *ngIf="user.role.includes('USER')">
+    <hr><br><br>
+    <mat-card-title>&nbsp; &nbsp;Stages effectués par {{ user.firstName }} {{ user.lastName }}</mat-card-title>
+    <mat-card class="description">
+      <mat-list role="list">
+        <mat-list-item *ngFor="let internship of internships  | paginate: {
+              itemsPerPage: 5,
+              currentPage: p,
+              totalItems: internships.length}" role="listitem">
+          <small class="text-muted">{{ internship.conventionReference }}</small>
+          <br>&nbsp; &nbsp;
+          <div><a [routerLink]="['../internship', internship.id]">{{ internship.function }}</a></div>
+        </mat-list-item>
+      </mat-list>
+      <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
+        autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page">
+      </pagination-controls>
+    </mat-card>
+  </mat-card-content>
+  <mat-card-content *ngIf="!user.role.includes('USER')">
+    <hr><br><br>
+    <mat-card-title>&nbsp; &nbsp;²{{ user.firstName }} {{ user.lastName }}</mat-card-title>
+    <mat-card class="description">
+      <mat-list role="list">
+        <mat-list-item *ngFor="let internship of user.internships  | paginate: {
               itemsPerPage: 5,
               currentPage: p,
               totalItems: user.internships.length}" role="listitem">
-              <small class="text-muted">{{ internship.conventionReference }}</small>
-              <br>&nbsp; &nbsp;
-              <div><a [routerLink]="['../../internship', internship.id]">{{ internship.function }}</a></div>
-          </mat-list-item>
-        </mat-list>
-        <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
-          autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
-          screenReaderPageLabel="page">
-        </pagination-controls>
-      </mat-card>
-    </mat-card-content>
-  </mat-card>
+          <small class="text-muted">{{ internship.conventionReference }}</small>
+          <br>&nbsp; &nbsp;
+          <div><a [routerLink]="['../../internship', internship.id]">{{ internship.function }}</a></div>
+        </mat-list-item>
+      </mat-list>
+      <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
+        autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page">
+      </pagination-controls>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

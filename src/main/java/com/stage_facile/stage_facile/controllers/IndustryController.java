@@ -18,6 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.stage_facile.stage_facile.models.Industry;
 import com.stage_facile.stage_facile.services.IndustryService;
 
+/**
+ * Contrôleur pour l'API secteurs d'activités. 
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/industries")
@@ -31,12 +34,21 @@ public class IndustryController {
 		this.industryService = industryService;
 	}
 	
+	/**
+	 * Charge en base les secteurs depuis le fichier .ods fourni
+	 * en annexe.
+	 * @param model
+	 * @return redirection vers la requête /all
+	 */
 	@GetMapping("/load")
-	public ModelAndView loadCompaniesFromOds(Map<String, Object> model) {
+	public ModelAndView loadIndustriesFromOds(Map<String, Object> model) {
 		this.industryService.loadIndustries();
 		return new ModelAndView("redirect:/industries/all", model);
 	}
     
+	/**
+	 * Renvoie tous les secteurs d'activités en base.
+	 */
 	@GetMapping("/all")
     public List<Industry> getIndustries() {
         return this.industryService.findAll();
@@ -56,11 +68,22 @@ public class IndustryController {
     	return this.industryService.findById(2L).get();
     }
 	
+	/**
+	 * Renvoie le secteur d'activités d'identifiant id passé en paramètre
+	 * qui se trouve en base.
+	 * @param id
+	 * @return le secteur d'id id.
+	 */
 	@GetMapping("/")
     public Optional<Industry> findById(@RequestParam String id) {
 		return this.industryService.findById(Long.parseLong(id));
     }
 	
+	/**
+	 * Renvoie le secteur d'activité portant le nom passé dans l'url.
+	 * @param name nom du secteur.
+	 * @return le secteur d'activité si présent.
+	 */
 	@GetMapping("/{name}")
 	public Industry findByName(@PathVariable String name) {
 		List<Industry> results = this.industryService.findByName(name); 

@@ -14,24 +14,22 @@ import { Industry } from 'src/app/models/Industry';
 })
 export class AddCompanyComponent implements OnInit {
   companyForm: FormGroup;
-
+  /**
+   * Valeurs par défaut
+   */
+  title = "Ajouter une entreprise"
   countries: string[];
   industries: Industry[];
   
-  constructor(private fb: FormBuilder,
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private companyService: CompanyService, 
-    private industryService: IndustryService) { }
-
-  ngOnInit(): void {
+  constructor(public fb: FormBuilder,
+    public router: Router, 
+    public companyService: CompanyService, 
+    public industryService: IndustryService) {
+    
     this.countries = countriesJson.map(country => country.name);
-
-    this.industryService.findAll().subscribe(data => {
-      this.industries = data;
-    }); 
-
+    
     this.companyForm = this.fb.group({
+      id: '',
       name: '',
       industry: '',
       headOfficeAddress: '',
@@ -41,6 +39,13 @@ export class AddCompanyComponent implements OnInit {
       city: '',
       country: '',
     });
+  }
+
+  ngOnInit(): void {
+
+    this.industryService.findAll().subscribe(data => {
+      this.industries = data;
+    }); 
 
   }
 
@@ -49,11 +54,11 @@ export class AddCompanyComponent implements OnInit {
   }
 
   onSubmit():void {
-    this.companyService.save(this.companyForm.value).subscribe(result => this.gotoCompanyList());
-    
+    this.companyService.save(this.companyForm.value)
+      .subscribe(result => this.gotoParentPage());
   }
 
-  gotoCompanyList() {
+  gotoParentPage() {
     this.router.navigate(['/companies']);
   }
 

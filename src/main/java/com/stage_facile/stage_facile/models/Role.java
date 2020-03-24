@@ -10,6 +10,10 @@ import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
+/**
+ * Entité rôle (d'un utilisateur).
+ * Voir l'énumération ERole pour obtenir les rôles possibles.
+ */
 @Entity
 @Table(name = "roles", 
 	uniqueConstraints = { @UniqueConstraint(columnNames = "name") })

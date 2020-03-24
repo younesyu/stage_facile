@@ -11,6 +11,11 @@ import com.stage_facile.stage_facile.models.Industry;
 
 @Repository
 public interface IndustryRepository extends CrudRepository<Industry, Long> {
+	/**
+	 * Trouver des secteurs d'activité par nom.
+	 * @param name
+	 * @return La liste des secteurs d'activité portant ce nom.
+	 */
 	@Query("SELECT i FROM Industry i WHERE i.name=:name")
 	public List<Industry> findByName(@Param("name") String name);
 }

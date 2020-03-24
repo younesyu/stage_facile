@@ -26,6 +26,10 @@ export class CompanyService {
     return this.http.post<Company>(this.companiesUrl + "add", company);
   }
 
+  public delete(company: Company) {
+    return this.http.post<Company>(this.companiesUrl + "delete", company);
+  }
+
   public getInternships(id: number): Observable<Internship[]> {
     return this.http.get<Internship[]>(this.companiesUrl + "internships/" + id);
   } 

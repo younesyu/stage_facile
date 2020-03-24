@@ -19,7 +19,12 @@ public interface InternshipService {
 	 */
 	public void update(Long id, Internship internship);
 	/**
-	 * Gets a list of all validated internships.
+	 * Retourne la liste de tous les stages validés.
 	 */
 	public List<Internship> findValidated();
+	
+	/**
+	 * Retourne la liste de tous les stages non validés.
+	 */
+	public List<Internship> findNonValidated();
 }

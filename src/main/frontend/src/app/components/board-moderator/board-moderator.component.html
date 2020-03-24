@@ -1,1 +1,47 @@
-<p>board-moderator works!</p>
+<mat-card class="main-container">
+    <mat-card-content>
+        <mat-card>
+            <mat-card-content>
+                <table mat-table [dataSource]="internshipsDataSource" matSort class="mat-elevation-z8"
+                    style="width: 100%;">
+
+                    <ng-container matColumnDef="firstName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.user.firstName }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.user.lastName }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="conventionReference">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Référence de la convention </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.conventionReference }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="validate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Valider </th>
+                        <td mat-cell *matCellDef="let element">
+                          <button mat-raised-button *ngIf="element.validated" color="warn" style="background-color: rgb(81, 187, 136)">Validé</button>
+                          <button mat-raised-button *ngIf="!element.validated" color="warn" (click)="validateInternship(element)">Non validé</button>
+                        </td>
+                      </ng-container>
+
+                    <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Supprimer </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-raised-button color="warn" (click)="delete(element)">Supprimer</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsInternships"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsInternships;"></tr>
+                </table>
+
+                <mat-paginator [length]="nonValidatedInternships.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+</mat-card>

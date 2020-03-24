@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { InternshipService } from 'src/app/services/internship.service';
+import { Internship } from 'src/app/models/Internship';
 
 @Component({
   selector: 'app-profile',
@@ -10,18 +12,24 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfileComponent implements OnInit {
   user: User;
+  internships: Internship[];
   p = 1;
 
-  constructor(private userService: UserService, 
+  constructor(private userService: UserService,
+    private internshipService: InternshipService,
     private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    let email = this.tokenStorage.getUser().username;
-    this.userService.findUserByEmail(email).subscribe(data => {
+    this.userService.getLoggedInUser().subscribe(data => {
       this.user = data;
+      this.user.role = this.tokenStorage.getUser().role;
+      this.internshipService.getUserInternships(this.user.id).subscribe(data => {
+        this.internships = data;
+        console.log(data);
+      });
     });
 
-    console.log(this.user);
+
   }
 
 }

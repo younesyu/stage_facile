@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public Set<Internship> getInternships(Long id) {
-		return internshipRepository.findInternships(id);
+		return internshipRepository.findInternshipsByUserId(id);
 	}
 	
 	@Override

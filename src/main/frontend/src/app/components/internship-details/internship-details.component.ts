@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Internship } from 'src/app/models/Internship';
 import { InternshipService } from 'src/app/services/internship.service';
-import { ActivatedRoute } from '@angular/router';
-import { Company } from 'src/app/models/Company';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletionDialogComponent } from '../deletion-dialog/deletion-dialog.component';
 
 @Component({
   selector: 'app-internship-details',
@@ -10,11 +11,14 @@ import { Company } from 'src/app/models/Company';
   styleUrls: ['./internship-details.component.sass']
 })
 export class InternshipDetailsComponent implements OnInit {
-  
+
   public internship: Internship;
   public id: number;
-  
-  constructor(private route: ActivatedRoute, private internshipService: InternshipService) { }
+
+  constructor(private route: ActivatedRoute,
+    public router: Router,
+    private internshipService: InternshipService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -23,4 +27,23 @@ export class InternshipDetailsComponent implements OnInit {
     });
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DeletionDialogComponent, {
+      width: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.delete();
+    });
+  }
+
+  delete(): void {
+    this.internshipService.delete(this.internship).subscribe(result => {
+      this.gotoParentPage();
+    });
+  }
+
+  gotoParentPage() {
+    this.router.navigate(['/internships']);
+  }
 }

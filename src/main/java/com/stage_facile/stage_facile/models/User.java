@@ -12,6 +12,10 @@ import javax.validation.constraints.Email;
 
 import lombok.Data;
 
+/**
+ * Entité utilisateur.
+ */
+
 @Entity
 @Table(name = "users", 
 		uniqueConstraints = { @UniqueConstraint(columnNames = "email") })

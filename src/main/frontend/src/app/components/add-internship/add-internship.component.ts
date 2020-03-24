@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Internship } from 'src/app/models/Internship';
 import countriesJson from 'src/assets/countries-FR.json'
 import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/app/models/Company';
 import { Industry } from 'src/app/models/Industry';
 import { IndustryService } from 'src/app/services/industry.service';
 import { InternshipService } from 'src/app/services/internship.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,24 +17,52 @@ import { UserService } from 'src/app/services/user.service';
 export class AddInternshipComponent implements OnInit {
   internshipForm: FormGroup;
 
+  /**
+   * Valeurs par défaut
+   */
+  title = "Ajouter un stage"
   countries: string[];
-  values: string[];
+  experienceLevels: string[];
   wayOfFinding: string[];
   companies: Company[];
   industries: Industry[];
 
-  constructor(private fb: FormBuilder,
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private userService: UserService,
-    private internshipService: InternshipService,
-    private companyService: CompanyService, 
-    private industryService: IndustryService) { }
-  
-  ngOnInit(): void {
+  constructor(public fb: FormBuilder,
+    public router: Router,
+    public userService: UserService,
+    public internshipService: InternshipService,
+    public companyService: CompanyService,
+    public industryService: IndustryService) {
+
+
+    this.internshipForm = this.fb.group({
+      beginDate: '',
+      endDate: '',
+      function: '',
+      description: '',
+      location: '',
+      stipend: ['', [
+        Validators.pattern("^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9]?)?$"),
+        Validators.maxLength(20),
+      ]],
+      conventionReference: ['', [
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(4),
+        Validators.maxLength(20),
+      ]],
+      experienceLevel: '',
+      managers: this.fb.array([]),
+      foundBy: '',
+      company: '',
+      industry: '',
+      user: '',
+      id: '',
+      validated: 'false',
+    });
+
     this.countries = countriesJson.map(country => country.name);
 
-    this.values = [
+    this.experienceLevels = [
       "Collège, lycée...",
       "Bac",
       "Bac + 1",
@@ -53,39 +80,23 @@ export class AddInternshipComponent implements OnInit {
       "Autre"
     ];
 
+  }
+
+  ngOnInit(): void {
+
     this.companyService.findAll().subscribe(data => {
       this.companies = data;
-    }); 
+    });
 
     this.industryService.findAll().subscribe(data => {
       this.industries = data;
-    }); 
-
-    this.internshipForm = this.fb.group({
-      beginDate : '',
-      endDate : '',
-      function : '',
-      description : '',
-      location : '',
-      stipend : ['', [
-        Validators.pattern("^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9]?)?$"),
-        Validators.maxLength(20),
-      ]],
-      conventionReference: ['', [
-        Validators.pattern("^[0-9]*$"),
-        Validators.minLength(4),
-        Validators.maxLength(20),
-      ]],
-      experienceLevel: '',
-      managers: this.fb.array([]),
-      foundBy: '',
-      company: '',
-      industry: '',
-      user: '',
     });
 
-    this.internshipForm.get('user').setValue(this.userService.getLoggedInUser());
+    this.userService.getLoggedInUser().subscribe(data => {
+      this.internshipForm.get('user').setValue(data);
+    });
   }
+
   get conventionReference() {
     return this.internshipForm.get('conventionReference')
   }
@@ -94,7 +105,7 @@ export class AddInternshipComponent implements OnInit {
   }
 
   addManager() {
-    if(this.managers.length < 5) {
+    if (this.managers.length < 5) {
       const manager = this.fb.control('');
 
       this.managers.push(manager);
@@ -105,23 +116,26 @@ export class AddInternshipComponent implements OnInit {
     this.managers.removeAt(i);
   }
 
-  onSubmit():void {
-    this.internshipService.save(this.internshipForm.value).subscribe(result => this.gotoInternshipList());
-    
+  onSubmit(): void {
+    this.internshipService.save(this.internshipForm.value).subscribe(result => this.gotoParentPage());
   }
 
-  gotoInternshipList() {
+  gotoParentPage() {
     this.router.navigate(['/internships']);
   }
 
   dateCompare() {
-    console.log("here");
-    if(this.internshipForm.get('beginDate').value - this.internshipForm.get('endDate').value > 0) {
-      this.internshipForm.get('endDate').setErrors({
-        invalid: true
-      });
-      console.log(this.internshipForm.get('beginDate').value - this.internshipForm.get('endDate').value);
+    let beginDate = Date.parse(this.internshipForm.get('beginDate').value);
+    let endDate = Date.parse(this.internshipForm.get('endDate').value);
+    
+    if(beginDate - endDate > 0) {
+      this.internshipForm.get('beginDate').setErrors({ valid : false });
+      this.internshipForm.get('endDate').setErrors({ valid : false });
+    } else {
+      this.internshipForm.get('beginDate').setErrors(null);
+      this.internshipForm.get('endDate').setErrors(null);
     }
-    else this.internshipForm.get('endDate').setErrors(null);
+
+    return (beginDate - endDate > 0)
   }
 }

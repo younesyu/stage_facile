@@ -1,0 +1,20 @@
+<mat-card class="main-container" style="width: 50%">
+    <mat-card-header>
+        <mat-card-title>
+            Statistiques
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Par sexe">
+                <app-gender-stats></app-gender-stats>
+            </mat-tab>
+            <mat-tab label="Par pays">
+                <app-country-stats></app-country-stats>
+            </mat-tab>
+            <mat-tab label="Par année">
+                <app-year-stats></app-year-stats>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

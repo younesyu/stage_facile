@@ -1,34 +1,44 @@
-<mat-card class="main-container">
+<mat-card *ngIf="internship" class="main-container">
+<div align="right">
+  <a mat-raised-button color="primary" [routerLink]="['../edit', internship.id]">Editer</a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a mat-raised-button color="warn" (click)="openDialog()">Supprimer</a>
+  <br><br>
+</div>
   <mat-card-header>
     <mat-card class="header">
       <mat-card-header>
         <mat-card-title>
           {{ internship.function }}
+          <br>
         </mat-card-title>
         <mat-card-subtitle>
           Référence convention : {{ internship.conventionReference }}
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        &nbsp; &nbsp;  <img src="../../../assets/user.svg" alt="" width="18" height="18" />
-        &nbsp; Effectué par <a [routerLink]="['../../students', internship.user.id]" style="color: black; text-decoration: underline;">{{ internship.user.firstName }} {{ internship.user.lastName }}</a>
+        &nbsp; &nbsp; <img src="../../../assets/user.svg" alt="" width="18" height="18" />
+        &nbsp; Effectué par <a [routerLink]="['../../students', internship.user.id]"
+          style="color: black; text-decoration: underline;">{{ internship.user.firstName }}
+          {{ internship.user.lastName }}</a>
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/company.svg" alt="" width="18" height="18" />
-        &nbsp; {{ internship.company.name }} (<a [routerLink]="['../../company', internship.company.id]">Voir les autres stages effectués à {{ internship.company.name }}</a>)
+        &nbsp; &nbsp; <img src="../../../assets/company.svg" alt="" width="18" height="18" />
+        &nbsp; {{ internship.company.name }} (<a [routerLink]="['../../company', internship.company.id]">Voir les autres
+          stages effectués à {{ internship.company.name }}</a>)
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/location.svg" alt="" width="18" height="18" />
+        &nbsp; &nbsp; <img src="../../../assets/location.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.location }}
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/factory.svg" alt="" width="18" height="18" />
+        &nbsp; &nbsp; <img src="../../../assets/factory.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.industry.name }}
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/experience.svg" alt="" width="18" height="18" />
+        &nbsp; &nbsp; <img src="../../../assets/experience.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.experienceLevel }}
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/calendar.svg" alt="" width="18" height="18" />
+        &nbsp; &nbsp; <img src="../../../assets/calendar.svg" alt="" width="18" height="18" />
         &nbsp; du {{ internship.beginDate | date:'dd/MM/yyyy' }} au {{ internship.endDate | date:'dd/MM/yyyy' }}
         <br><br>
-        &nbsp; &nbsp;  <img src="../../../assets/money.svg" alt="" width="22" height="22" />
+        &nbsp; &nbsp; <img src="../../../assets/money.svg" alt="" width="22" height="22" />
         &nbsp; <span *ngIf="internship.stipend && internship.stipend > 0; else nonPaid">
           <i> {{ internship.stipend }} € / mois </i>
         </span>

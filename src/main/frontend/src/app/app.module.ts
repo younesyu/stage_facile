@@ -23,9 +23,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio'; 
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatSortModule } from '@angular/material/sort'; 
 import { MatTableModule } from '@angular/material/table'; 
+import { MatDialogModule } from '@angular/material/dialog'; 
 
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+
+/* Chart.js */
+import { ChartsModule } from 'ng2-charts';
 
 /* App components */
 import { CreateUserFormComponent } from './components/create-user-form/create-user-form.component';
@@ -45,6 +50,16 @@ import { BoardModeratorComponent } from './components/board-moderator/board-mode
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { AuthentificationComponent } from './components/authentification/authentification.component';
 import { StudentDetailsComponent } from './components/student-details/student-details.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { GenderStatsComponent } from './components/stats/gender-stats/gender-stats.component';
+import { YearStatsComponent } from './components/stats/year-stats/year-stats.component';
+import { CountryStatsComponent } from './components/stats/country-stats/country-stats.component';
+import { AdminUserListComponent } from './components/board-admin/admin-user-list/admin-user-list.component';
+import { AdminModListComponent } from './components/board-admin/admin-mod-list/admin-mod-list.component';
+import { AdminAdminListComponent } from './components/board-admin/admin-admin-list/admin-admin-list.component';
+import { InternshipEditComponent } from './components/add-internship/internship-edit/internship-edit.component';
+import { DeletionDialogComponent } from './components/deletion-dialog/deletion-dialog.component';
+import { CompanyEditComponent } from './components/add-company/company-edit/company-edit.component';
 
 @NgModule({
   declarations: [
@@ -66,12 +81,23 @@ import { StudentDetailsComponent } from './components/student-details/student-de
     BoardUserComponent,
     AuthentificationComponent,
     StudentDetailsComponent,
+    StatsComponent,
+    GenderStatsComponent,
+    YearStatsComponent,
+    CountryStatsComponent,
+    AdminUserListComponent,
+    AdminModListComponent,
+    AdminAdminListComponent,
+    InternshipEditComponent,
+    DeletionDialogComponent,
+    CompanyEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     MatNativeDateModule,
+    ChartsModule,
 
     /* UI modules */
     NgxPaginationModule,
@@ -89,7 +115,9 @@ import { StudentDetailsComponent } from './components/student-details/student-de
     MatRadioModule,
     MatTabsModule,
     MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
+    MatDialogModule,
   ],
   providers: [MatDatepickerModule, authInterceptorProviders],
   bootstrap: [AppComponent]
