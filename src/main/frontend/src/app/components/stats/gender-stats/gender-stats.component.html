@@ -4,4 +4,14 @@
         [data]="pieChartData" 
         [labels]="pieChartLabels"
         [chartType]="pieChartType"></canvas>
+
+    <br><br>
+
+    <div style="margin-left: 10%;">
+        Nombre de stages effectués par des étudiants de sexe masculin &nbsp;&nbsp;&nbsp;  {{ maleCount }}
+        <br>
+        Nombre de stages effectués par des étudiants de sexe féminin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ femaleCount }}
+        <br>
+        <b>Total</b> {{ maleCount + femaleCount }}
+    </div>
 </div>

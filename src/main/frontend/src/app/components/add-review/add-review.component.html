@@ -1,0 +1,74 @@
+<mat-card-header>
+  <mat-card-title>{{ title }}</mat-card-title>
+  <mat-card-subtitle>* Champs obligatoire</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <form [formGroup]="internshipReviewFormGroup">
+    <hr>
+    <mat-form-field>
+      <mat-label>Le travail demandé était...</mat-label>
+      <mat-select formControlName="subject" required>
+        <mat-option *ngFor="let value of subject" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Facilité d'intégration</mat-label>
+      <mat-select formControlName="easeOfIntegration" required>
+        <mat-option *ngFor="let value of easeOfIntegration" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Communication entre membres de l'équipe</mat-label>
+      <mat-select formControlName="teamCommunication" required>
+        <mat-option *ngFor="let value of teamCommunication" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Présence et encadrement du tuteur</mat-label>
+      <mat-select formControlName="mentorship" required>
+        <mat-option *ngFor="let value of mentorship" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Charge de travail</mat-label>
+      <mat-select formControlName="workload" required>
+        <mat-option *ngFor="let value of workload" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Recommendriez-vous ce type de stage à un autre étudiant?</mat-label>
+      <mat-select formControlName="wouldRecommend" required>
+        <mat-option *ngFor="let value of wouldRecommend" [value]="value">
+          {{ value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Si vous le souhaitez, vous pouvez décrire votre expérience de stage en quelques mots...</mat-label>
+      <textarea matInput formControlName="content" required></textarea>
+    </mat-form-field>
+
+    <br><br><br>
+    <div>
+      <button *ngIf="internshipReviewFormGroup" [disabled]="internshipReviewFormGroup.invalid" color="primary"
+        mat-button matStepperNext>Soumettre la fiche de stage</button>
+    </div>
+  </form>
+  <br><br>
+</mat-card-content>

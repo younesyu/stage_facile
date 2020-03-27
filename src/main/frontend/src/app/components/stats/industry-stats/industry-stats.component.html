@@ -1,0 +1,23 @@
+<br>
+<div style="text-align: center;"><mat-form-field style="font-size: small;">
+  <mat-label>Rechercher un secteur d'activité</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Programmation">
+</mat-form-field>
+</div>
+
+<table #table mat-table [dataSource]="industriesCountsToShow" class="mat-elevation-z8" style="width: 100%;">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Nom du secteur </th>
+    <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+  </ng-container>
+  <ng-container matColumnDef="count">
+    <th mat-header-cell *matHeaderCellDef> Nom du secteur </th>
+    <td mat-cell *matCellDef="let element"> {{ element.count }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsIndustries"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsIndustries;"></tr>
+</table>
+<mat-paginator #paginator *ngIf="industriesCountsToShow" [length]="industriesCountsToShow.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

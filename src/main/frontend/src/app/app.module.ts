@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 /* Angular Material */
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card'
@@ -26,6 +27,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort'; 
 import { MatTableModule } from '@angular/material/table'; 
 import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper'; 
 
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 
@@ -60,6 +64,9 @@ import { AdminAdminListComponent } from './components/board-admin/admin-admin-li
 import { InternshipEditComponent } from './components/add-internship/internship-edit/internship-edit.component';
 import { DeletionDialogComponent } from './components/deletion-dialog/deletion-dialog.component';
 import { CompanyEditComponent } from './components/add-company/company-edit/company-edit.component';
+import { IndustryStatsComponent } from './components/stats/industry-stats/industry-stats.component';
+import { AddReviewComponent } from './components/add-review/add-review.component';
+import { InternshipFormComponent } from './components/internship-form/internship-form.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +98,9 @@ import { CompanyEditComponent } from './components/add-company/company-edit/comp
     InternshipEditComponent,
     DeletionDialogComponent,
     CompanyEditComponent,
+    IndustryStatsComponent,
+    AddReviewComponent,
+    InternshipFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +111,7 @@ import { CompanyEditComponent } from './components/add-company/company-edit/comp
 
     /* UI modules */
     NgxPaginationModule,
+    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -114,10 +125,13 @@ import { CompanyEditComponent } from './components/add-company/company-edit/comp
     MatListModule,
     MatRadioModule,
     MatTabsModule,
-    MatPaginatorModule,
-    MatSortModule,
     MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatSnackBarModule,
+    MatStepperModule,
   ],
   providers: [MatDatepickerModule, authInterceptorProviders],
   bootstrap: [AppComponent]

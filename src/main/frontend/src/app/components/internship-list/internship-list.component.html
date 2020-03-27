@@ -1,15 +1,21 @@
-<div class="container">
+<div class="container" *ngIf="internships">
   <br>
   <h1 id="header">
     Stages
-    <span style="width: 100px;"></span>
-    <a style="float: right" *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="../add-internship">Ajouter un stage</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <mat-form-field style="font-size: small;">
+      <mat-label>Rechercher un stage</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Intitulé, entreprise, secteur... Ex. Aix-Marseille Université">
+    </mat-form-field>
+    <a style="float: right" *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="../add-internship">Ajouter
+      un stage</a>
   </h1>
+
   <mat-nav-list *ngIf="internships">
-    <mat-list-item style="height: 100px; border-bottom: thin #888888 solid;" *ngFor="let internship of internships | paginate: {
+    <mat-list-item style="height: 100px; border-bottom: thin #888888 solid;" *ngFor="let internship of displayedInternships | paginate: {
       itemsPerPage: 5,
       currentPage: p,
-      totalItems: internships.length}">
+      totalItems: displayedInternships.length}">
       <a matLine [routerLink]="['../internship', internship.id]">
         <div class="d-flex w-100 justify-content-between">
           <h3 style="font-weight: 200;" class="mb-1">{{ internship.company.name }} - {{ internship.function }}</h3>

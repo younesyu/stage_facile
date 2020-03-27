@@ -26,5 +26,5 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumnsUsers;"></tr>
   </table>
 
-  <mat-paginator [length]="students.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator *ngIf="students" [length]="students.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
   </mat-paginator>

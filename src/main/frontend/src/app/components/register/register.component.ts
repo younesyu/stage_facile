@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -17,8 +17,7 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private router: Router,
     private authService: AuthService,
     private tokenStorage: TokenStorageService) { }
 
@@ -64,7 +63,7 @@ export class RegisterComponent implements OnInit {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
         setTimeout(() => {
-          this.reloadPage();
+          window.location.reload();
           this.router.navigate(['/']);
         }, 2000);
 
@@ -86,9 +85,5 @@ export class RegisterComponent implements OnInit {
     }
     else this.registerForm.get('birthDate').setErrors(null);
 
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 }

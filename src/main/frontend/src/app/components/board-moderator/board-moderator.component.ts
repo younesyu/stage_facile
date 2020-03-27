@@ -14,7 +14,7 @@ export class BoardModeratorComponent implements OnInit {
   nonValidatedInternships: Internship[];
   internshipsDataSource: MatTableDataSource<Internship>;
 
-  displayedColumnsInternships: string[] = ['firstName', 'lastName', 'conventionReference', 'validate', 'delete'];
+  displayedColumnsInternships: string[] = ['student', 'function', 'conventionReference', 'validate', 'delete'];
   
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;

@@ -74,6 +74,10 @@ export class UserService {
   delete(user: User) {
     return this.http.post<User>(usersUrl + "delete", user);
   }
+  
+  hasRightsToAlter(userId : number) {
+    return this.http.post<boolean>(usersUrl + "hasRightsToAlter", userId);
+  }
 
 
 }

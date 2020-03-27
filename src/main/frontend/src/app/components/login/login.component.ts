@@ -13,12 +13,11 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  role: string;
 
   constructor(private fb: FormBuilder,
-    private route: ActivatedRoute, 
-    private router: Router, 
-    private authService: AuthService, 
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
     private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
@@ -29,7 +28,6 @@ export class LoginComponent implements OnInit {
 
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      this.role = this.tokenStorage.getUser().role;
       this.router.navigate(['/']);
     }
   }
@@ -41,10 +39,9 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveUser(data);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.role = this.tokenStorage.getUser().role;
         setTimeout(() => {
-            this.reloadPage();
-            this.router.navigate(['/']);
+          window.location.reload();
+          this.router.navigate(['/']);
         }, 2000);
       },
       err => {
@@ -52,9 +49,5 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 }

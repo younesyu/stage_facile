@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { InternshipService } from 'src/app/services/internship.service';
 
 @Component({
   selector: 'app-gender-stats',
@@ -8,24 +8,20 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class GenderStatsComponent implements OnInit {
   
-  public pieChartLabels = ['Femmes', 'Hommes', 'Non défini'];
+  maleCount: number;
+  femaleCount: number;
+
+  public pieChartLabels = ['Femmes', 'Hommes'];
   public pieChartData: number[];
   public pieChartType = 'pie';
 
-  constructor(private userService: UserService) { }
+  constructor(private internshipService: InternshipService) { }
 
   ngOnInit(): void {
-    let nbMen = 0;
-    let nbWomen = 0;
-    let nbNonAssigned = 0;
-
-    this.userService.findAll().subscribe(data => {
-      data.forEach(user => {
-        if(user.gender) nbMen++;
-        else if(!user.gender) nbWomen++;
-        else if(user.gender == null) nbNonAssigned++;
-      });
-      this.pieChartData = [nbMen, nbWomen, nbNonAssigned];
+    this.internshipService.countByGender().subscribe(data => {
+      this.maleCount = data.males;
+      this.femaleCount = data.females;
+      this.pieChartData = [this.femaleCount, this.maleCount];
     });
   }
 

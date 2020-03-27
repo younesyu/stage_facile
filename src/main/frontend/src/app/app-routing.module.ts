@@ -18,6 +18,7 @@ import { ChartsModule } from 'ng2-charts';
 import { BrowserModule } from '@angular/platform-browser';
 import { InternshipEditComponent } from './components/add-internship/internship-edit/internship-edit.component';
 import { CompanyEditComponent } from './components/add-company/company-edit/company-edit.component';
+import { InternshipFormComponent } from './components/internship-form/internship-form.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'internships', component: InternshipListComponent },
   { path: 'companies', component: CompanyListComponent },
-  { path: 'add-internship', component: AddInternshipComponent },
+  { path: 'add-internship', component: InternshipFormComponent },
   { path: 'add-company', component: AddCompanyComponent },
   { path: 'internship/:id', component: InternshipDetailsComponent },
   { path: 'internship/edit/:id', component: InternshipEditComponent },

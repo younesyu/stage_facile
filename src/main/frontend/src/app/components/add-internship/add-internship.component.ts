@@ -15,7 +15,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./add-internship.component.sass']
 })
 export class AddInternshipComponent implements OnInit {
-  internshipForm: FormGroup;
+  internshipInfoFormGroup: FormGroup;
+  editMode: boolean = false;
+  submitted: boolean = false;
+
+  /**
+   * Données de la base
+   */
+  companies: Company[];
+  industries: Industry[];
 
   /**
    * Valeurs par défaut
@@ -24,18 +32,16 @@ export class AddInternshipComponent implements OnInit {
   countries: string[];
   experienceLevels: string[];
   wayOfFinding: string[];
-  companies: Company[];
-  industries: Industry[];
+  companiesString: string[];
+  industriesString: string[];
 
   constructor(public fb: FormBuilder,
-    public router: Router,
     public userService: UserService,
-    public internshipService: InternshipService,
     public companyService: CompanyService,
     public industryService: IndustryService) {
 
 
-    this.internshipForm = this.fb.group({
+    this.internshipInfoFormGroup = this.fb.group({
       beginDate: '',
       endDate: '',
       function: '',
@@ -86,22 +92,24 @@ export class AddInternshipComponent implements OnInit {
 
     this.companyService.findAll().subscribe(data => {
       this.companies = data;
+      this.companiesString = data.map(company => company.name);
     });
 
     this.industryService.findAll().subscribe(data => {
       this.industries = data;
+      this.industriesString = data.map(industry => industry.name);
     });
 
     this.userService.getLoggedInUser().subscribe(data => {
-      this.internshipForm.get('user').setValue(data);
+      this.internshipInfoFormGroup.get('user').setValue(data);
     });
   }
 
   get conventionReference() {
-    return this.internshipForm.get('conventionReference')
+    return this.internshipInfoFormGroup.get('conventionReference')
   }
   get managers() {
-    return this.internshipForm.get('managers') as FormArray
+    return this.internshipInfoFormGroup.get('managers') as FormArray
   }
 
   addManager() {
@@ -116,24 +124,16 @@ export class AddInternshipComponent implements OnInit {
     this.managers.removeAt(i);
   }
 
-  onSubmit(): void {
-    this.internshipService.save(this.internshipForm.value).subscribe(result => this.gotoParentPage());
-  }
-
-  gotoParentPage() {
-    this.router.navigate(['/internships']);
-  }
-
   dateCompare() {
-    let beginDate = Date.parse(this.internshipForm.get('beginDate').value);
-    let endDate = Date.parse(this.internshipForm.get('endDate').value);
+    let beginDate = Date.parse(this.internshipInfoFormGroup.get('beginDate').value);
+    let endDate = Date.parse(this.internshipInfoFormGroup.get('endDate').value);
     
     if(beginDate - endDate > 0) {
-      this.internshipForm.get('beginDate').setErrors({ valid : false });
-      this.internshipForm.get('endDate').setErrors({ valid : false });
+      this.internshipInfoFormGroup.get('beginDate').setErrors({ valid : false });
+      this.internshipInfoFormGroup.get('endDate').setErrors({ valid : false });
     } else {
-      this.internshipForm.get('beginDate').setErrors(null);
-      this.internshipForm.get('endDate').setErrors(null);
+      this.internshipInfoFormGroup.get('beginDate').setErrors(null);
+      this.internshipInfoFormGroup.get('endDate').setErrors(null);
     }
 
     return (beginDate - endDate > 0)

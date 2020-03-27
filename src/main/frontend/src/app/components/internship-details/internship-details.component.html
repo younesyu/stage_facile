@@ -1,5 +1,7 @@
 <mat-card *ngIf="internship" class="main-container">
-<div align="right">
+<div *ngIf="canAlter" align="right">
+  <button mat-raised-button *ngIf="canValidate && !internship.validated" (click)="validateInternship()">Valider</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <a mat-raised-button color="primary" [routerLink]="['../edit', internship.id]">Editer</a>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <a mat-raised-button color="warn" (click)="openDialog()">Supprimer</a>
@@ -32,9 +34,9 @@
         &nbsp; &nbsp; <img src="../../../assets/factory.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.industry.name }}
         <br><br>
-        &nbsp; &nbsp; <img src="../../../assets/experience.svg" alt="" width="18" height="18" />
+        <span *ngIf="internship.experienceLevel">&nbsp; &nbsp;<img src="../../../assets/experience.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.experienceLevel }}
-        <br><br>
+        <br><br></span>
         &nbsp; &nbsp; <img src="../../../assets/calendar.svg" alt="" width="18" height="18" />
         &nbsp; du {{ internship.beginDate | date:'dd/MM/yyyy' }} au {{ internship.endDate | date:'dd/MM/yyyy' }}
         <br><br>
@@ -56,6 +58,42 @@
     <mat-card-title>&nbsp; &nbsp;Description</mat-card-title>
     <mat-card class="description">
       {{ internship.description }}
+    </mat-card>
+  </mat-card-content>
+  <mat-card-content *ngIf="review">
+    <hr><br><br>
+    <mat-card-title>&nbsp; &nbsp;Avis de {{ internship.user.firstName }} {{ internship.user.lastName }}
+      sur ce stage
+    </mat-card-title>
+    <mat-card class="description">
+      {{ review.content }}
+      {{ review.teamCommunication }}
+      {{ review.subject }}
+      {{ review.mentorship }}
+      {{ review.upvoters.length }}
+      {{ review.downvoters.length }}
+      <button mat-raised-button (click)="upvoteReview()">upvote</button>
+      <button mat-raised-button (click)="downvoteReview()">downvote</button>
+        <br>
+          <mat-label class="text-muted">Réponses</mat-label>
+        <div *ngFor="let reply of replies; let i = index">
+          <br>
+          <p>Postée {{ reply.postedOn | date:'dd/MM/yyyy' }} à {{ reply.postedOn | date:'HH:mm' }}</p>
+          <br>
+          <p>{{ reply.content }}</p>
+          <button mat-raised-button color="warn" (click)="deleteReply(i)">Supprimer</button>
+        </div>
+
+      <form [formGroup]="replyForm">
+        <mat-form-field>
+          <mat-label>Ecrire un commentaire...</mat-label>
+          <textarea matInput formControlName="content" required></textarea>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button [disabled]="replyForm.invalid" (click)="addComment()">Envoyer</button>
+        </div>
+      </form>
+      
     </mat-card>
   </mat-card-content>
 </mat-card>

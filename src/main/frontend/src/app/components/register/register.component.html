@@ -23,15 +23,17 @@
     <mat-form-field>
       <mat-label>Adresse électronique</mat-label>
       <input type="email" matInput formControlName="username" required>
+      <mat-error>Merci d'entrer une adresse électronique valide. <br></mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
       <mat-label>Mot de passe</mat-label>
       <input type="password" matInput formControlName="password" required>
+      <mat-error>Le mot de passe doit être composé d'au moins 8 caractères. <br></mat-error>
     </mat-form-field>
     <br>
-    <mat-radio-group formControlName="gender" aria-label="Civilité">
-      <mat-label class="text-muted">Civilité</mat-label>
+    <mat-radio-group required formControlName="gender" aria-label="Civilité">
+      <mat-label style="position: relative; left: -21%;" class="text-muted">Civilité *</mat-label>
       <br>
       <mat-radio-button value="true" class="text-muted">Monsieur</mat-radio-button>
       <span style="margin-right: 100px;"></span>
@@ -40,12 +42,12 @@
     <br>
     <mat-form-field>
       <mat-label>Prénom</mat-label>
-      <input matInput formControlName="firstName">
+      <input required matInput formControlName="firstName">
     </mat-form-field>
     <br>
     <mat-form-field>
       <mat-label>Nom</mat-label>
-      <input matInput formControlName="lastName">
+      <input required matInput formControlName="lastName">
     </mat-form-field>
     <br>
     <mat-form-field>

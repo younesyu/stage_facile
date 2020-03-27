@@ -1,0 +1,19 @@
+<mat-card class="main-container">
+<mat-horizontal-stepper [linear]="true" #stepper style="display: inline;">
+    <mat-step [stepControl]="infoForm.internshipInfoFormGroup">
+        <ng-template matStepLabel>Informations relatives au stage</ng-template>
+        <app-add-internship #infoForm></app-add-internship>
+    </mat-step>
+    <mat-step [stepControl]="reviewForm.internshipReviewFormGroup">
+        <ng-template matStepLabel>Retour d'expérience</ng-template>
+        <app-add-review #reviewForm></app-add-review>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Succès</ng-template>
+      <div class="alert alert-success">
+        En cliquant sur le bouton ci-dessous, vous soumettrez votre fiche de stage qui sera affichée dans la liste après avoir été validée par un enseignant.
+      </div>
+      <button mat-raised-button color="primary" (click)="onSubmit()">Soumettre</button>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

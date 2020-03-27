@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Internship } from '../models/Internship';
+import { Review } from '../models/Review';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InternshipService {
-
   private internshipsUrl: string;
   
   constructor(private http: HttpClient) {
@@ -34,7 +34,7 @@ export class InternshipService {
     return this.http.get<Internship>(this.internshipsUrl + id);
   }
 
-  public save(internship: Internship) { 
+  public save(internship: Internship) {
     return this.http.post<Internship>(this.internshipsUrl + "add", internship);
   }
 
@@ -42,8 +42,24 @@ export class InternshipService {
     return this.http.post<Internship>(this.internshipsUrl + "delete", internship);
   }
 
+  addReview(internshipId: number, reviewObject: any) {
+    let params = new HttpParams()
+      .set("internshipId", internshipId.toString());
+
+    return this.http.post<any>(this.internshipsUrl + "addReview", reviewObject, {params})
+  }
+
+  getReview(internshipId: number) {
+    return this.http.get<Review>(this.internshipsUrl + internshipId + "/review");
+  }
+
+
   getUserInternships(id: number): Observable<Internship[]> {
     return this.http.get<Internship[]>("http://localhost:8080/users/" + id + "/internships");
+  }
+
+  countByGender(): Observable<any> {
+    return this.http.get<any>(this.internshipsUrl + "countByGender");
   }
 
 }
