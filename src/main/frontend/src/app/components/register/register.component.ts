@@ -15,14 +15,15 @@ export class RegisterComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
+  editMode: boolean = false
 
-  constructor(private fb: FormBuilder,
-    private router: Router,
-    private authService: AuthService,
-    private tokenStorage: TokenStorageService) { }
+  constructor(public fb: FormBuilder,
+    public router: Router,
+    public authService: AuthService,
+    public tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
-    if (this.tokenStorage.getToken()) {
+    if (this.tokenStorage.getToken() && !this.editMode) {
       this.router.navigate(['/']);
     }
 

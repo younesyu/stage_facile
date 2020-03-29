@@ -1,0 +1,51 @@
+<mat-card class="main-container">
+<mat-card-header>
+    <mat-card-title>
+      <br><br>
+      Editer un profil
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="registerForm">
+      <hr>
+      <br>
+      <mat-form-field>
+        <mat-label>Adresse électronique</mat-label>
+        <input type="email" matInput formControlName="username" required>
+      </mat-form-field>
+      <br>
+      <mat-radio-group required formControlName="gender" aria-label="Civilité">
+        <mat-label class="text-muted">Civilité *</mat-label>
+        <br>
+        <mat-radio-button [checked]="registerForm.controls.gender.value" value="true" class="text-muted">Monsieur</mat-radio-button>
+        <span style="margin-right: 100px;"></span>
+        <mat-radio-button [checked]="!registerForm.controls.gender.value" value="false" class="text-muted">Madame</mat-radio-button>
+      </mat-radio-group>
+      <br>
+      <mat-form-field>
+        <mat-label>Prénom</mat-label>
+        <input required matInput formControlName="firstName">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input required matInput formControlName="lastName">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Date de naissance</mat-label>
+        <input required matInput formControlName="birthDate" [matDatepicker]="birthDate" (dateChange)="dateCheck()">
+        <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
+        <mat-datepicker #birthDate></mat-datepicker>
+        <mat-error>Vous devez être âgé d'au moins 17 ans.</mat-error>
+      </mat-form-field>
+      <br>
+      <br><br><br>
+      <button mat-raised-button [disabled]="registerForm.invalid" color="primary" (click)="onSubmit()">S'inscrire</button>
+    </form>
+  </mat-card-content>
+  
+  <div class="alert alert-success" *ngIf="isSuccessful">
+    Modifications prises en compte. Redirection vers le profil...
+  </div>
+</mat-card>

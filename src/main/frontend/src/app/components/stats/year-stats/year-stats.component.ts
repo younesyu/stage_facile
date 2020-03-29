@@ -19,19 +19,9 @@ export class YearStatsComponent implements OnInit {
   constructor(private internshipService: InternshipService) { }
 
   ngOnInit(): void {
-    let yearMap = new Map<string, number>();
-    this.internshipService.findAll().subscribe(data => {
-      data.forEach(internship => {
-        let year = new Date(internship.beginDate).getFullYear().toString();
-        let yearNumber = yearMap.get(year);
-        if(yearNumber) {
-          yearMap.set(year, yearNumber + 1);
-        } else {
-          yearMap.set(year, 1);
-        }
-      });
-      this.barChartLabels = Array.from(yearMap.keys());
-      let chartData = Array.from(yearMap.values());
+    this.internshipService.countByYear().subscribe(yearMap => {
+      this.barChartLabels = Object.getOwnPropertyNames(yearMap);
+      let chartData = Object.values(yearMap);
       this.barChartData = [{ data: chartData, label: 'Nombre de stages effectués' }];
     });
     

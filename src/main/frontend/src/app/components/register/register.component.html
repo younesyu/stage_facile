@@ -55,6 +55,7 @@
       <input required matInput formControlName="birthDate" [matDatepicker]="birthDate" (dateChange)="dateCheck()">
       <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
       <mat-datepicker #birthDate></mat-datepicker>
+      <mat-error>Vous devez être âgé(e) d'au moins 17 ans.</mat-error>
     </mat-form-field>
     <br>
     <br><br><br>

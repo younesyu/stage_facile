@@ -8,6 +8,6 @@ export class User {
     lastName: string;
     birthDate: Date;
     gender: boolean;
-    role: String;
+    role: { "id": number, "name": string };
     internships: Internship[];
 }

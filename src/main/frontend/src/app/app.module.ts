@@ -67,6 +67,9 @@ import { CompanyEditComponent } from './components/add-company/company-edit/comp
 import { IndustryStatsComponent } from './components/stats/industry-stats/industry-stats.component';
 import { AddReviewComponent } from './components/add-review/add-review.component';
 import { InternshipFormComponent } from './components/internship-form/internship-form.component';
+import { ReplyListComponent } from './components/internship-details/reply-list/reply-list.component';
+import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
+import { LoadComponent } from './helpers/load/load.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +104,9 @@ import { InternshipFormComponent } from './components/internship-form/internship
     IndustryStatsComponent,
     AddReviewComponent,
     InternshipFormComponent,
+    ReplyListComponent,
+    ProfileEditComponent,
+    LoadComponent,
   ],
   imports: [
     BrowserModule,

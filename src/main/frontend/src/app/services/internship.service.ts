@@ -8,6 +8,7 @@ import { Review } from '../models/Review';
   providedIn: 'root'
 })
 export class InternshipService {
+  
   private internshipsUrl: string;
   
   constructor(private http: HttpClient) {
@@ -60,6 +61,10 @@ export class InternshipService {
 
   countByGender(): Observable<any> {
     return this.http.get<any>(this.internshipsUrl + "countByGender");
+  }
+
+  countByYear(): Observable<Map<number, number>> {
+    return this.http.get<Map<number, number>>(this.internshipsUrl + "countByYear");
   }
 
 }

@@ -4,6 +4,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { InternshipService } from 'src/app/services/internship.service';
 import { Internship } from 'src/app/models/Internship';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -12,20 +13,23 @@ import { Internship } from 'src/app/models/Internship';
 })
 export class ProfileComponent implements OnInit {
   user: User;
+  id: number;
   internships: Internship[];
   p = 1;
 
   constructor(private userService: UserService,
+    private route: ActivatedRoute,
     private internshipService: InternshipService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService) {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+  }
 
   ngOnInit(): void {
-    this.userService.getLoggedInUser().subscribe(data => {
+    this.userService.get(this.id).subscribe(data => {
       this.user = data;
-      this.user.role = this.tokenStorage.getUser().role;
+      console.log(data)
       this.internshipService.getUserInternships(this.user.id).subscribe(data => {
         this.internships = data;
-        console.log(data);
       });
     });
 

@@ -6,7 +6,6 @@ import { TokenStorageService } from './token-storage.service';
   providedIn: 'root'
 })
 export class ReviewService {
-
   private reviewsUrl: string;
   
   constructor(private http: HttpClient,
@@ -47,6 +46,22 @@ export class ReviewService {
       "commentId": commentId
     }
     return this.http.post<null>(this.reviewsUrl + "deleteReply", requestBody);
+  }
+  
+  upvoteComment(commentId: number) {
+    let requestBody = {
+      "commentId": commentId,
+      "voterId": this.tokenStorageService.getUser().id
+    }
+    return this.http.post<null>(this.reviewsUrl + "upvoteComment", requestBody);
+  }
+
+  downvoteComment(commentId: number) {
+    let requestBody = {
+      "commentId": commentId,
+      "voterId": this.tokenStorageService.getUser().id
+    }
+    return this.http.post<null>(this.reviewsUrl + "downvoteComment", requestBody);
   }
 
 }

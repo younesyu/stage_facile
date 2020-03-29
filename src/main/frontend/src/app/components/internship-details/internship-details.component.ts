@@ -19,9 +19,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class InternshipDetailsComponent implements OnInit {
 
   public internship: Internship;
-  review: Review;
-  replies: Comment[];
-  replyForm: FormGroup;
   
   canAlter: boolean = false;
   canValidate: boolean = false;
@@ -30,22 +27,15 @@ export class InternshipDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     public router: Router,
     private internshipService: InternshipService,
-    private reviewService: ReviewService,
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
-    public dialog: MatDialog,
-    private fb: FormBuilder) {
-
-      this.replyForm = this.fb.group({
-        content: '',
-      });
+    public dialog: MatDialog,) {
+      this.id = parseInt(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id'));
-    this.internshipService.getReview(this.id).subscribe(data => {
-      this.review = data;
-      this.internship = this.review.internship;
+    this.internshipService.get(this.id).subscribe(data => {
+      this.internship = data
       
       this.canAlter = (this.tokenStorageService.getUser().id == this.internship.user.id);
       this.userService.hasRightsToAlter(this.tokenStorageService.getUser().id)
@@ -53,39 +43,7 @@ export class InternshipDetailsComponent implements OnInit {
           if (!this.canAlter) this.canAlter = hasRights;
           this.canValidate = hasRights;
         });
-
-      this.replies = this.review.replies;
-      console.log(this.replies);
     });
-
-
-  }
-
-  upvoteReview() {
-    this.reviewService.upvote(this.internship.id).subscribe(_ => {
-      this.ngOnInit();
-    });
-  }
-
-  downvoteReview() {
-    this.reviewService.downvote(this.internship.id).subscribe(_ => {
-      this.ngOnInit();
-    });
-  }
-
-  addComment() {
-    let content = this.replyForm.get('content').value;
-    console.log(content)
-    this.reviewService.addComment(this.internship.id, content).subscribe(_ => {
-      this.ngOnInit();
-    })
-  }
-
-  deleteReply(index: number) {
-    let comment = this.replies[index];
-    this.reviewService.deleteComment(this.internship.id, comment.id).subscribe(_ => {
-      this.ngOnInit();
-    })
   }
 
   openDialog(): void {

@@ -19,9 +19,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { InternshipEditComponent } from './components/add-internship/internship-edit/internship-edit.component';
 import { CompanyEditComponent } from './components/add-company/company-edit/company-edit.component';
 import { InternshipFormComponent } from './components/internship-form/internship-form.component';
+import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
+import { LoadComponent } from './helpers/load/load.component';
 
 
 const routes: Routes = [
+  { path: 'load', component: LoadComponent },
   { path: 'home', component: HomeComponent },
   { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'internships', component: InternshipListComponent },
@@ -33,7 +36,8 @@ const routes: Routes = [
   { path: 'company/:id', component: CompanyDetailsComponent },
   { path: 'company/edit/:id', component: CompanyEditComponent },
   { path: 'authenticate', component: AuthentificationComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'profile/edit/:id', component: ProfileEditComponent },
   { path: 'my-internships', component: BoardUserComponent },
   { path: 'stats', component: StatsComponent },
   { path: 'mod', component: BoardModeratorComponent },

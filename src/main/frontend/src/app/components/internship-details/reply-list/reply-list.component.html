@@ -1,0 +1,106 @@
+<mat-card-content *ngIf="review && replies">
+    <hr><br><br>
+    <mat-card>
+        <mat-card-title>&nbsp; &nbsp;Avis de {{ internship.user.firstName }} {{ internship.user.lastName }}
+            sur ce stage
+        </mat-card-title>
+        <mat-card-content style="margin-left: 30px;">
+            <br><br>
+            <h4 class="mb-1">{{ review.content }}</h4>
+            <br><br>
+            <div class="list-inline">
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.subject)}"></div>
+                    Concordance des missions avec le travail effectué
+                </div><br>
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.teamCommunication)}"></div>
+                    Communication avec l'équipe
+                </div><br>
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.mentorship)}"></div>
+                    Tuteur
+                </div><br>
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.workload)}"></div>
+                    Charge de travail
+                </div><br>
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.easeOfIntegration)}"></div>
+                    Facilité d'intégration
+                </div><br>
+                <div class="list-inline-item">
+                    <div class="square" [ngStyle]="{'background-color': getColor(review.wouldRecommend)}"></div>
+                    {{ getRecommandation(review.wouldRecommend) }}
+                </div><br>
+            </div>
+            <div style="width: 90%; text-align: right;">
+                <small style="align: right;">
+                    {{ review.upvoters.length }}
+                    <a *ngIf="!upvoted(review)" (click)="upvoteReview()"><img src="../../../assets/like.png" width="18"
+                            height="18" /></a>
+                    <a *ngIf="upvoted(review)" (click)="upvoteReview()"><img src="../../../assets/like-filled.png"
+                            width="18" height="18" /></a>
+                    {{ review.downvoters.length }}
+                    <a *ngIf="!downvoted(review)" (click)="downvoteReview()"><img src="../../../assets/dislike.png"
+                            width="18" height="18" /></a>
+                    <a *ngIf="downvoted(review)" (click)="downvoteReview()"><img
+                            src="../../../assets/dislike-filled.png" width="18" height="18" /></a>
+                </small>
+            </div>
+            <br>
+        </mat-card-content>
+    </mat-card>
+    <br>
+    <hr><br>
+    <mat-card-title>Réponses</mat-card-title>
+    <br>
+    <form [formGroup]="replyForm" style="text-align: center;">
+        <mat-form-field style="padding: 20px; background-color: white;">
+            <mat-label>Ecrire un commentaire...</mat-label>
+            <textarea matInput formControlName="content" #content></textarea>
+        </mat-form-field>
+        <div>
+            <button mat-raised-button *ngIf="replyForm.controls.content.value.length"
+                (click)="addComment()">Envoyer</button>
+            <br><br>
+        </div>
+    </form>
+
+    <div class="list-group">
+        <div *ngFor="let reply of replies  | paginate: {
+            itemsPerPage: 5,
+            currentPage: p}; let i = index"
+            class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ reply.writer.firstName }} {{ reply.writer.lastName }}</h5>
+                <small>
+                    le {{ reply.postedOn | date:'dd/MM/yyyy' }}
+                    à {{ reply.postedOn | date:'HH:mm' }}
+                    <a *ngIf="canDelete(reply)" (click)="deleteComment(i)"><img src="../../../assets/trash.svg"
+                            width="18" height="18" /></a>
+                </small>
+            </div>
+            <p class="mb-1">{{ reply.content }}</p>
+            <div style="width: 90%; text-align: right;">
+                <small style="align: right;">
+                    {{ reply.upvoters.length }}
+                    <a *ngIf="!upvoted(reply)" (click)="upvoteComment(i)"><img src="../../../assets/like.png" width="18"
+                            height="18" /></a>
+                    <a *ngIf="upvoted(reply)" (click)="upvoteComment(i)"><img src="../../../assets/like-filled.png"
+                            width="18" height="18" /></a>
+                    {{ reply.downvoters.length }}
+                    <a *ngIf="!downvoted(reply)" (click)="downvoteComment(i)"><img src="../../../assets/dislike.png"
+                            width="18" height="18" /></a>
+                    <a *ngIf="downvoted(reply)" (click)="downvoteComment(i)"><img
+                            src="../../../assets/dislike-filled.png" width="18" height="18" /></a>
+                </small>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <pagination-controls style="text-align: center;" (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
+        autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page">
+    </pagination-controls>
+</mat-card-content>

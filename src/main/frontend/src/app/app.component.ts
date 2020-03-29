@@ -13,6 +13,7 @@ export class AppComponent {
   showModeratorBoard = false;
   showUserBoard = false;
   username: string;
+  user;
 
   constructor(private tokenStorageService: TokenStorageService) { }
 
@@ -20,14 +21,14 @@ export class AppComponent {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.role = user.role;
+      this.user = this.tokenStorageService.getUser();
+      this.role = this.user.role;
 
       this.showAdminBoard = this.role.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.role.includes('ROLE_MODERATOR') || this.role.includes('ROLE_ADMIN');
       this.showUserBoard = this.role.includes('ROLE_USER');
 
-      this.username = user.username;
+      this.username = this.user.username;
     }
   }
 

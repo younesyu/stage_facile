@@ -19,7 +19,7 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link" href="/admin" *ngIf="showAdminBoard">Administrateur</a></li>
         <li class="nav-item"><a class="nav-link" href="/mod" *ngIf="showModeratorBoard">Tableau de contrôle</a></li>
-        <li class="nav-item"><a class="nav-link" href="/profile" *ngIf="isLoggedIn">Profil</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="['../profile', user.id]" *ngIf="isLoggedIn">Profil</a></li>
         <li class="nav-item"><a class="nav-link" href="/authenticate" *ngIf="!isLoggedIn">S'identifier</a></li>
         <li class="nav-item"><a class="nav-link" href *ngIf="isLoggedIn" (click)="logout()">Se déconnecter</a></li>
       </ul>

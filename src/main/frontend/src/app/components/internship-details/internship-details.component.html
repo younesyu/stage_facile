@@ -60,40 +60,5 @@
       {{ internship.description }}
     </mat-card>
   </mat-card-content>
-  <mat-card-content *ngIf="review">
-    <hr><br><br>
-    <mat-card-title>&nbsp; &nbsp;Avis de {{ internship.user.firstName }} {{ internship.user.lastName }}
-      sur ce stage
-    </mat-card-title>
-    <mat-card class="description">
-      {{ review.content }}
-      {{ review.teamCommunication }}
-      {{ review.subject }}
-      {{ review.mentorship }}
-      {{ review.upvoters.length }}
-      {{ review.downvoters.length }}
-      <button mat-raised-button (click)="upvoteReview()">upvote</button>
-      <button mat-raised-button (click)="downvoteReview()">downvote</button>
-        <br>
-          <mat-label class="text-muted">Réponses</mat-label>
-        <div *ngFor="let reply of replies; let i = index">
-          <br>
-          <p>Postée {{ reply.postedOn | date:'dd/MM/yyyy' }} à {{ reply.postedOn | date:'HH:mm' }}</p>
-          <br>
-          <p>{{ reply.content }}</p>
-          <button mat-raised-button color="warn" (click)="deleteReply(i)">Supprimer</button>
-        </div>
-
-      <form [formGroup]="replyForm">
-        <mat-form-field>
-          <mat-label>Ecrire un commentaire...</mat-label>
-          <textarea matInput formControlName="content" required></textarea>
-        </mat-form-field>
-        <div>
-          <button mat-raised-button [disabled]="replyForm.invalid" (click)="addComment()">Envoyer</button>
-        </div>
-      </form>
-      
-    </mat-card>
-  </mat-card-content>
+  <app-reply-list [internship]="internship"></app-reply-list>
 </mat-card>
