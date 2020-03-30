@@ -124,9 +124,7 @@ export class AddInternshipComponent implements OnInit {
         });
       }
       else {
-          this.internshipInfoFormGroup.get('company').setErrors({
-            valid: true
-          });
+          this.internshipInfoFormGroup.get('company').setErrors(null);
         }
       });
 

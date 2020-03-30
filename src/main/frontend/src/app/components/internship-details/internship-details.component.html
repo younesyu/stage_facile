@@ -15,14 +15,14 @@
           <br>
         </mat-card-title>
         <mat-card-subtitle>
-          Référence convention : {{ internship.conventionReference }}
+          Référence convention : {{ internship.conventionReference }}. (Gest: {{ managersStr }})
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         &nbsp; &nbsp; <img src="../../../assets/user.svg" alt="" width="18" height="18" />
         &nbsp; Effectué par <a [routerLink]="['../../students', internship.user.id]"
           style="color: black; text-decoration: underline;">{{ internship.user.firstName }}
-          {{ internship.user.lastName }}</a>
+          {{ internship.user.lastName }}</a> &nbsp; &nbsp;<i>({{ internship.foundBy }})</i>
         <br><br>
         &nbsp; &nbsp; <img src="../../../assets/company.svg" alt="" width="18" height="18" />
         &nbsp; {{ internship.company.name }} (<a [routerLink]="['../../company', internship.company.id]">Voir les autres

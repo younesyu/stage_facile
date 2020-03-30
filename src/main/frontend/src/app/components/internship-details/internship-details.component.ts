@@ -19,7 +19,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class InternshipDetailsComponent implements OnInit {
 
   public internship: Internship;
-  
+  managersStr: string = "/"
+
   canAlter: boolean = false;
   canValidate: boolean = false;
   public id: number;
@@ -29,20 +30,27 @@ export class InternshipDetailsComponent implements OnInit {
     private internshipService: InternshipService,
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
-    public dialog: MatDialog,) {
-      this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+    public dialog: MatDialog, ) {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
     this.internshipService.get(this.id).subscribe(data => {
       this.internship = data
-      
+
       this.canAlter = (this.tokenStorageService.getUser().id == this.internship.user.id);
       this.userService.hasRightsToAlter(this.tokenStorageService.getUser().id)
         .subscribe(hasRights => {
           if (!this.canAlter) this.canAlter = hasRights;
           this.canValidate = hasRights;
         });
+      if (this.internship.managers.length != 0) {
+        this.managersStr = this.internship.managers[0]
+        for (let i = 1; i < this.internship.managers.length; i++) {
+          let manager = this.internship.managers[i];
+          this.managersStr = this.managersStr + ", " + manager;
+        }
+      }
     });
   }
 
