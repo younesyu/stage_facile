@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.stage_facile.stage_facile.models.Comment;
 import com.stage_facile.stage_facile.models.EReview;
 import com.stage_facile.stage_facile.models.Internship;
 import com.stage_facile.stage_facile.models.Review;
+import com.stage_facile.stage_facile.repositories.CommentRepository;
 import com.stage_facile.stage_facile.repositories.InternshipRepository;
 import com.stage_facile.stage_facile.repositories.ReviewRepository;
 import com.stage_facile.stage_facile.services.InternshipService;
@@ -38,9 +40,12 @@ public class InternshipController {
     
     @Autowired
     private InternshipRepository internshipRepository;
-    
+
     @Autowired
     private ReviewRepository reviewRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     @Autowired
     private ReviewService reviewService;
@@ -88,6 +93,14 @@ public class InternshipController {
 	 */
 	@PostMapping("/delete")
 	void deleteInternship(@RequestBody Internship internship) {
+		reviewRepository.findById(internship.getId()).ifPresent(review -> {
+			for (Comment comment : review.getReplies()) {
+				this.reviewService.deleteComment(review, comment);
+			}
+		});
+		if(reviewRepository.existsById(internship.getId())) {
+			reviewRepository.deleteById(internship.getId());
+		}
 		internshipService.delete(internship);
     }
 	

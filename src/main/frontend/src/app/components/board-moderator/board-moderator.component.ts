@@ -4,6 +4,8 @@ import { Internship } from 'src/app/models/Internship';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletionDialogComponent } from '../deletion-dialog/deletion-dialog.component';
 
 @Component({
   selector: 'app-board-moderator',
@@ -20,7 +22,8 @@ export class BoardModeratorComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
 
-  constructor(private internshipService: InternshipService) { }
+  constructor(private internshipService: InternshipService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.internshipService.findNonValidated().subscribe(
@@ -31,6 +34,16 @@ export class BoardModeratorComponent implements OnInit {
 
       }
     )
+  }
+
+  openDialog(internship): void {
+    const dialogRef = this.dialog.open(DeletionDialogComponent, {
+      width: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.delete(internship);
+    });
   }
 
   delete(internship: Internship) {
