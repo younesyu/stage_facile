@@ -134,9 +134,7 @@ public class InternshipServiceImpl implements InternshipService{
 
 	@Override
 	public List<Internship> findValidated() {
-		return this.findAll().stream()
-				.filter(Internship::getValidated)
-				.collect(Collectors.toList());
+		return (List<Internship>) internshipRepository.findValidated();
 	}
 
 	@Override

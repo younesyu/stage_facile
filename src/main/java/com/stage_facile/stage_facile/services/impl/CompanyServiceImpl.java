@@ -1,5 +1,6 @@
 package com.stage_facile.stage_facile.services.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<Company> findAll() {
-		return (List<Company>) companyRepository.findAll();
+		List<Company> all = (List<Company>) companyRepository.findAll();
+		Collections.reverse(all);
+		return all;
 	}
 
 	@Override

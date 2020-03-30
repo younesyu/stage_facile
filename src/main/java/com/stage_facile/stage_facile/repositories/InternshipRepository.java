@@ -37,6 +37,16 @@ public interface InternshipRepository extends CrudRepository<Internship, Long> {
 	 */
 	@Query("SELECT i " 
 	 + "FROM Internship i "
+	+ "WHERE i.validated = true "
+	+ "ORDER BY i.id DESC")
+	List<Internship> findValidated();
+	
+
+	/**
+	 * Retourne la liste des stages qui ne sont pas validés.
+	 */
+	@Query("SELECT i " 
+	 + "FROM Internship i "
 	+ "WHERE (i.validated = false OR i.validated IS NULL)")
 	List<Internship> getNonValidatedInternships();
 	
