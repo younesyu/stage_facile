@@ -15,7 +15,7 @@ export class ProfileEditComponent extends RegisterComponent implements OnInit {
   id: number;
 
   constructor(public fb: FormBuilder,
-    public router: Router, 
+    public router: Router,
     private route: ActivatedRoute,
     public authService: AuthService,
     private userService: UserService,
@@ -32,21 +32,41 @@ export class ProfileEditComponent extends RegisterComponent implements OnInit {
 
       this.registerForm.get('username').setValue(data.email);
       this.registerForm.get('username').disable();
-      let birthDate = this.parseDate(data.birthDate.toString())
-      this.registerForm.get('birthDate').setValue(birthDate);
-      this.registerForm.get('birthDate').valueChanges.subscribe(console.log);
+      if (data.birthDate) {
+        let birthDate = this.parseDate(data.birthDate.toString())
+        this.registerForm.get('birthDate').setValue(birthDate);
+      }
+      else {
+        console.log(data)
+      }
     });
   }
 
-  parseDate(dateStr: string): Date {
-    let date = new Date();
-    console.log(dateStr.substring(0, 4))
-    console.log(dateStr.substring(5, 7))
-    console.log(dateStr.substring(8, 10))
-    console.log(dateStr)
-    date.setFullYear(+(dateStr.substring(0, 4)), +(dateStr.substring(5, 7)) - 1,
-    +(dateStr.substring(8, 10)))
-    return date;
+  onSubmit() {
+    this.registerForm.get('birthDate').setValue(this.parseBirthDate());
+    this.registerForm.addControl('id', this.fb.control(this.tokenStorage.getUser().id))
+    this.registerForm.addControl('email', this.fb.control(this.registerForm.get('username').value))
+    this.userService.save(this.registerForm.value).subscribe(
+      data => {
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+        setTimeout(() => {
+          window.location.reload();
+          this.router.navigate(['/']);
+        }, 2000);
+
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    );
+  }
+
+  parseDate(dateStr: string): string {
+    return dateStr.substring(0, 4) + "/"
+      + dateStr.substring(5, 7) + "/"
+      + dateStr.substring(8, 10);
   }
 
 }

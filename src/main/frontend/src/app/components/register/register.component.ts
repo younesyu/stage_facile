@@ -38,10 +38,25 @@ export class RegisterComponent implements OnInit {
       ]],
       firstName: '',
       lastName: '',
-      birthDate: '',
+      birthDate: ['', [
+        Validators.required,
+        Validators.pattern("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\[0-9]\[0-9])")
+      ]],
       gender: '',
       role: '',
     });
+
+    this.registerForm.get('birthDate').valueChanges.subscribe(input => {
+      if (this.dateCheck(input)) {
+        this.registerForm.get('birthDate').setErrors(null);
+      }
+      else {
+          this.registerForm.get('birthDate').setErrors({
+            valid: false
+          });
+        }
+      });
+
   }
 
   get password() {
@@ -53,6 +68,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.registerForm.get('birthDate').setValue(this.parseBirthDate());
+    
     if (this.role === "Enseignant") {
       this.registerForm.get('role').setValue("mod");
     }
@@ -76,15 +93,31 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  dateCheck() {
-    let date: Date = this.registerForm.get('birthDate').value;
+  parseBirthDate(): string {
+    let dateStr: String = this.registerForm.get('birthDate').value;
+    let year = dateStr.substring(dateStr.lastIndexOf("/") + 1);
+    let day = dateStr.substring(0, dateStr.indexOf("/"));
+    if (day.length < 2) day = "0" + day
+    let month = dateStr.substring(dateStr.indexOf("/") + 1, dateStr.lastIndexOf("/"));
+    if (month.length < 2) month = "0" + month
+    return (year + "-" + month + "-" + day);
+  }
 
-    if ((new Date()).getFullYear() - date.getFullYear() < 17) {
-      this.registerForm.get('birthDate').setErrors({
-        invalid: true
-      });
+  dateCheck(date: string) {
+    let year : number;
+    try {
+      year = parseInt(date.substring(date.lastIndexOf("/") + 1));
+    } catch {
+      return false;
     }
-    else this.registerForm.get('birthDate').setErrors(null);
+
+    if ((new Date()).getFullYear() - year < 17) {
+      return false;
+    }
+
+    else {
+      return true;
+    } 
 
   }
 }

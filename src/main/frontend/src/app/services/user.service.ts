@@ -71,6 +71,10 @@ export class UserService {
     return this.http.post<User>(usersUrl + 'validate', moderator);
   }
 
+  save(user: User) {
+    return this.http.post<User>(usersUrl + "add", user);
+  }
+
   delete(user: User) {
     return this.http.post<User>(usersUrl + "delete", user);
   }

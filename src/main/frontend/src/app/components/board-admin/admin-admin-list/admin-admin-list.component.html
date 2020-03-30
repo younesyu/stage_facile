@@ -8,7 +8,7 @@
     <div class="col">{{ row.firstName }}</div>
     <div class="col">{{ row.lastName }}</div>
     <div class="col">{{ row.email }}</div>
-    <div class="col">{{ row.id }}</div>
+    <div class="col"><a [routerLink]="['/profile', row.id]">{{ row.id }}</a></div>
     <div class="col">
       <button mat-raised-button color="warn" 
         *ngIf="!self(row)" (click)="delete(row)">Supprimer</button>

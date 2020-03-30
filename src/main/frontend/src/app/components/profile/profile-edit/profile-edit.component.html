@@ -34,18 +34,19 @@
       <br>
       <mat-form-field>
         <mat-label>Date de naissance</mat-label>
-        <input required matInput formControlName="birthDate" [matDatepicker]="birthDate" (dateChange)="dateCheck()">
-        <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
-        <mat-datepicker #birthDate></mat-datepicker>
+        <input required matInput formControlName="birthDate">
         <mat-error>Vous devez être âgé d'au moins 17 ans.</mat-error>
       </mat-form-field>
       <br>
       <br><br><br>
-      <button mat-raised-button [disabled]="registerForm.invalid" color="primary" (click)="onSubmit()">S'inscrire</button>
+      <button mat-raised-button [disabled]="registerForm.invalid" color="primary" (click)="onSubmit()">Valider</button>
     </form>
   </mat-card-content>
   
   <div class="alert alert-success" *ngIf="isSuccessful">
     Modifications prises en compte. Redirection vers le profil...
+  </div>
+  <div class="alert alert-danger" *ngIf="isSignUpFailed">
+    {{ errorMessage }}
   </div>
 </mat-card>
