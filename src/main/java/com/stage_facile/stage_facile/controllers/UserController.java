@@ -67,6 +67,7 @@ public class UserController {
 	 */
     @PostMapping("/add")
     void addUser(@RequestBody User user) {
+    	
         userService.save(user);
     } 
 
@@ -168,6 +169,13 @@ public class UserController {
     			userService.save(user);
     		}
     	});
+    }
+    
+    @PostMapping("/hasRightsToAlter")
+    public boolean hasRightsToAlter(@RequestBody int userId) {
+    	Long userIdL = new Long(userId);
+    	
+    	return this.userService.hasRightsToAlter(userIdL);
     }
     
     // To be deleted

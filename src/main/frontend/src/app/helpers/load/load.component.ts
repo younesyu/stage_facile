@@ -24,15 +24,27 @@ export class LoadComponent implements OnInit {
         let admin = {
           'firstName': 'admin',
           'lastName': 'admin',
-          'email': 'admin@admin.com',
+          'username': 'admin@admin.com',
           'password': 'admin',
           'gender': true,
           'role': 'admin',
         }
         this.authService.register(admin).subscribe(_ => {
-          this.router.navigate['/'];
-        })
-      })
-    }
+          setTimeout(_ => {
+          console.log(4)
+          this.router.navigate(['/']);
+          }, 5000)
+        }, err => {
+          console.log(1)
+          this.router.navigate(['/']);
+        });
+      }, err => {
+        console.log(2)
+        this.router.navigate(['/']);
+      });
+    }, err => {
+      this.router.navigate(['/']);
+    });
+  }
 
 }

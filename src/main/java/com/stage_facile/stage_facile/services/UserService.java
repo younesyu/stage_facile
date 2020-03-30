@@ -20,5 +20,5 @@ public interface UserService {
 	public List<User> findModerators();
 	public List<User> findAdmins();
 	public Optional<User> findByEmail(String email);
-	
+	public boolean hasRightsToAlter(Long userId);	
 }

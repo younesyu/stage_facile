@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.stage_facile.stage_facile.models.Industry;
 import com.stage_facile.stage_facile.services.IndustryService;
+import com.stage_facile.stage_facile.services.InternshipService;
 
 /**
  * Contrôleur pour l'API secteurs d'activités. 
@@ -28,6 +29,9 @@ public class IndustryController {
 
     @Autowired
     private IndustryService industryService;
+    
+    @Autowired
+    private InternshipService internshipService;
 
 	public IndustryController(IndustryService industryService) {
 		super();
@@ -89,5 +93,10 @@ public class IndustryController {
 		List<Industry> results = this.industryService.findByName(name); 
 		if (results.isEmpty()) return null;
 		return results.get(0);
+	}
+	
+	@GetMapping("/count")
+	public List<Object[]> count() {
+		return this.internshipService.findIndustryCounts();
 	}
 }

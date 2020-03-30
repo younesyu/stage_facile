@@ -58,11 +58,4 @@ public @Data class Internship {
 		this.company = company;
 		this.industry = industry;
 	}
-	
-	public void supressNullValidate() {
-		if(this.validated == null) {
-			this.validated = false;
-		}
-			
-	}
 }

@@ -7,3 +7,4 @@ import com.stage_facile.stage_facile.models.Comment;
 
 @Repository
 public interface CommentRepository extends CrudRepository<Comment, Long>{}
+

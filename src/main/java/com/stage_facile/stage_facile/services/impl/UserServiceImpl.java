@@ -97,6 +97,18 @@ public class UserServiceImpl implements UserService {
 	public List<User> findAdmins() {
 		return userRepository.findAdmins();
 	}
+
+	@Override
+	public boolean hasRightsToAlter(Long userId) {
+		Optional<User> optionalCurrentUser = this.find(userId);
+		if(!optionalCurrentUser.isPresent()) return false;
+		
+		User currentUser = optionalCurrentUser.get();
+		
+		ERole role = currentUser.getRole().getName();
+		return (role == ERole.ROLE_ADMIN
+				|| role == ERole.ROLE_MODERATOR);
+	}
 	
 	
 }

@@ -39,4 +39,25 @@ public interface InternshipRepository extends CrudRepository<Internship, Long> {
 	 + "FROM Internship i "
 	+ "WHERE (i.validated = false OR i.validated IS NULL)")
 	List<Internship> getNonValidatedInternships();
+	
+
+	@Query("SELECT i.industry.name, COUNT(i.industry) AS c "
+			+ "FROM Internship i "
+			+ "GROUP BY i.industry.id "
+			+ "ORDER BY c DESC")
+	public List<Object[]> findIndustryCounts();
+
+	@Query("SELECT COUNT(i.user) AS c "
+			+ "FROM Internship i "
+			+ "WHERE i.user.gender=:gender "
+			+ "AND i.validated = true "
+			+ "GROUP BY i.user.gender "
+			+ "ORDER BY c DESC")
+	public Integer findInternshipCountByGender(@Param("gender") boolean gender);
+	
+	@Query("SELECT YEAR(i.beginDate), COUNT(i) "
+			+ "FROM Internship i "
+			+ "GROUP BY YEAR(i.beginDate) "
+			+ "ORDER BY YEAR(i.beginDate) ASC")
+	public List<Object[]> findYearCounts();
 }

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.stage_facile.stage_facile.StageFacileApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.729 s - in com.stage_facile.stage_facile.StageFacileApplicationTests

@@ -12,6 +12,7 @@ import com.stage_facile.stage_facile.models.Company;
 import com.stage_facile.stage_facile.models.ERole;
 import com.stage_facile.stage_facile.models.Industry;
 import com.stage_facile.stage_facile.models.Internship;
+import com.stage_facile.stage_facile.models.Review;
 import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.parser.OdsParser;
 import com.stage_facile.stage_facile.repositories.CompanyRepository;
@@ -84,8 +85,26 @@ public class InternshipServiceImpl implements InternshipService{
 	}
 
 	@Override
-	public void save(Internship internship) {
-		internshipRepository.save(internship);
+	public Internship save(Internship internship) {
+		Industry industry = internship.getIndustry();
+		Company company = internship.getCompany();
+
+		if(industry.getId() == null) {
+			industry = this.industryRepository.save(industry);
+			internship.setIndustry(industry);
+		}
+		if (company.getId() == null) {
+			if (company.getIndustry().getId() == null) {
+				Industry cIndustry = company.getIndustry();
+				cIndustry = this.industryRepository.save(cIndustry);
+				company.setIndustry(cIndustry);
+			}
+			company = this.companyRepository.save(company);
+			internship.setCompany(company);
+			
+		}
+		
+		return internshipRepository.save(internship);
 	}
 
 	@Override
@@ -125,6 +144,33 @@ public class InternshipServiceImpl implements InternshipService{
 		return this.findAll().stream()
 				.filter(i -> !i.getValidated())
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Object[]> findIndustryCounts() {
+		return internshipRepository.findIndustryCounts();
+	}
+
+	@Override
+	public Integer findInternshipCountByGender(boolean gender) {
+		return internshipRepository.findInternshipCountByGender(gender);
+	}
+
+	@Override
+	public void saveReview(Internship internship, Review review) {
+//		Review savedReview = reviewRepository.save(review);
+//		internship.setReview(savedReview);
+//		internshipRepository.save(internship);
+	}
+
+	@Override
+	public void deleteReview(Internship internship) {
+//		try {
+//			reviewRepository.delete(internship.getReview());
+//			saveReview(internship, null);
+//		} catch (IllegalArgumentException e) {
+//			System.err.println(e);
+//		}
 	}
 
 }

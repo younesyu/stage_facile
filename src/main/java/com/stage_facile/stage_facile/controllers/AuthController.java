@@ -84,7 +84,7 @@ public class AuthController {
 	 * Inscrit dans la base de données l'utilisateur dont les informations sont passées
 	 * dans la requête en paramètres.
 	 * @param signUpRequest
-	 * @return Une requête 200 OK si l'utilisateur est enregistré.
+	 * @return Une réponse 200 OK si l'utilisateur est enregistré.
 	 * @throws RuntimeException si les rôles ne sont pas chargés en base
 	 */
 	@PostMapping("/signup")
@@ -97,6 +97,7 @@ public class AuthController {
 		User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getBirthDate(),
 				signUpRequest.getGender());
+		user.setValidated(true);
 
 		String strRoles = signUpRequest.getRole();
 		Role role;
@@ -111,6 +112,7 @@ public class AuthController {
 			} else if (strRoles.equals("mod")) {
 				role = roleRepository.findByName(ERole.ROLE_MODERATOR)
 						.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));
+				user.setValidated(false);
 			} else {
 				role = roleRepository.findByName(ERole.ROLE_USER)
 						.orElseThrow(() -> new RuntimeException("Erreur: Rôle non trouvé."));

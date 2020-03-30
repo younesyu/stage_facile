@@ -1,5 +1,6 @@
 package com.stage_facile.stage_facile.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,11 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.stage_facile.stage_facile.models.EReview;
 import com.stage_facile.stage_facile.models.Internship;
+import com.stage_facile.stage_facile.models.Review;
+import com.stage_facile.stage_facile.repositories.InternshipRepository;
+import com.stage_facile.stage_facile.repositories.ReviewRepository;
 import com.stage_facile.stage_facile.services.InternshipService;
+import com.stage_facile.stage_facile.services.ReviewService;
 
 /**
  * Contrôleur pour l'API Stages
@@ -28,6 +35,16 @@ public class InternshipController {
 
     @Autowired
     private InternshipService internshipService;
+    
+    @Autowired
+    private InternshipRepository internshipRepository;
+    
+    @Autowired
+    private ReviewRepository reviewRepository;
+    
+    @Autowired
+    private ReviewService reviewService;
+ 
 
 	public InternshipController(InternshipService internshipService) {
 		super();
@@ -60,8 +77,8 @@ public class InternshipController {
 	 * @param internship
 	 */
 	@PostMapping("/add")
-    void addInternship(@RequestBody Internship internship) {
-		internshipService.save(internship);
+    Internship addInternship(@RequestBody Internship internship) {
+		return internshipService.save(internship);
     }
 	
 	/**
@@ -92,7 +109,7 @@ public class InternshipController {
     	});
     	return this.internshipService.find(2L).get();
     }
-	
+
 	/**
 	 * Renvoie le stage d'identifiant id qui se trouve en base.
 	 * @param id
@@ -101,6 +118,20 @@ public class InternshipController {
 	@GetMapping("/{id}")
     public Optional<Internship> findById(@PathVariable Long id) {
     	return this.internshipService.find(id);
+    }
+	
+
+	/**
+	 * Renvoie le stage d'identifiant id qui se trouve en base.
+	 * @param id
+	 * @return le stage d'id id
+	 */
+	@GetMapping("/{id}/review")
+    public Object findReviewById(@PathVariable Long id) {
+    	Optional<Review> review = this.reviewService.find(id);
+    	Review response = (review.isPresent())? review.get() : new Review();
+    	response.setInternship(this.internshipService.find(id).get());
+    	return response; 
     }
 	
 	/**
@@ -135,11 +166,66 @@ public class InternshipController {
     	});
     }
     
-    @GetMapping("/setval")
-    public void setval() {
-    	for (Internship internship : this.internshipService.findAll()) {
-    		internship.supressNullValidate();
-    		internshipService.save(internship);
-    	}
+//    @GetMapping("/setval")
+//    public void setval() {
+//    	for (Internship internship : this.internshipService.findAll()) {
+//    		internship.supressNullValidate();
+//    		internshipService.save(internship);
+//    	}
+//    }
+    
+    @GetMapping("/countByGender")
+    public Map<String, Integer> countByGender() {
+    	Map<String, Integer> countMap = new HashMap<String, Integer>();
+    	countMap.put("males", this.internshipService.findInternshipCountByGender(true));
+    	countMap.put("females", this.internshipService.findInternshipCountByGender(false));
+    	
+    	return countMap;
     }
+    
+    @GetMapping("/countByYear")
+    public Map<Integer, Long> countByYear() {
+    	Map<Integer, Long> countMap = new HashMap<Integer, Long>();
+    	for (Object[] couple : this.internshipRepository.findYearCounts()) {
+			countMap.put((Integer) couple[0], (Long) couple[1]);
+		}
+    	return countMap;
+    			
+    }
+    
+    @PostMapping("/addReview")
+    public void addReview(@RequestParam int internshipId, @RequestBody Map<String, String> reviewMap) {
+    	Long internshipIdLong = new Long(internshipId);
+    
+    	this.internshipService.find(internshipIdLong).ifPresent(internship -> {
+
+        	String content = reviewMap.get("content");
+        	reviewMap.remove("content");
+        	Map<String, EReview> EReviewMap = new HashMap<>();
+    		reviewMap.forEach((key, value) -> {
+    			String subValue = String.valueOf(value.charAt(0));
+    			int intValue = Integer.parseInt(subValue);
+    			EReview ereview = EReview.parseInt(intValue);
+    			
+    			EReviewMap.put(key, ereview);
+    		});
+    		Review review = new Review();
+    		review.setContent(content);
+    		review.setTeamCommunication(EReviewMap.get("teamCommunication"));
+    		review.setEaseOfIntegration(EReviewMap.get("easeOfIntegration"));
+    		review.setMentorship(EReviewMap.get("mentorship"));
+    		review.setSubject(EReviewMap.get("subject"));
+    		review.setWorkload(EReviewMap.get("workload"));
+    		review.setWouldRecommend(EReviewMap.get("wouldRecommend"));
+    		
+    		this.reviewService.addReview(internship, review);
+    	});
+    	
+    }
+    
+    @GetMapping("/allreviews")
+    public List<Review> reviews() {
+    	return (List<Review>) this.reviewRepository.findAll();
+    }
+ 
 }

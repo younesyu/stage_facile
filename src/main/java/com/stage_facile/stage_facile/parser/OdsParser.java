@@ -2,12 +2,16 @@ package com.stage_facile.stage_facile.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.jopendocument.dom.spreadsheet.Sheet;
@@ -28,7 +32,7 @@ import com.stage_facile.stage_facile.models.User;
  */
 public class OdsParser {
 	
-	private static File iproFile = new File("./src/main/resources/StagesExport_1.ods");
+	private static File iproFile = new File("./classes/StagesExport_1.ods");
 	private static Sheet sheet;
 
 	public OdsParser() throws IOException {
@@ -104,10 +108,11 @@ public class OdsParser {
 		String fullName = sheet.getImmutableCellAt(3, row).getTextValue();
 		String firstName = parseFirstName(fullName);
 		String lastName = parseLastName(fullName);
-		
+		Date birthDate = getRandomBirthDate();
+		boolean gender = getRandomGender();
 		String email = sanitize(firstName) + "." + sanitize(lastName) + "@etu.univ-amu.fr";
 		
-		return new User(email, "password", firstName, lastName, null, null);
+		return new User(email, "password", firstName, lastName, birthDate, gender);
 	}
 
 	/**
@@ -130,6 +135,28 @@ public class OdsParser {
 		String capitalized = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
 
 		return capitalized;
+	}
+	
+	private static boolean getRandomGender() {
+		Random random = new Random();
+		return random.nextBoolean();
+	}
+	
+	private static Date getRandomBirthDate() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Random random = new Random();
+		int day = random.nextInt(29) + 1;
+		int month = random.nextInt(12) + 1;
+		int year = random.nextInt(10) + 1990;
+		
+		
+		try {
+			return formatter.parse(day + "-" + month + "-" + year);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**
