@@ -201,6 +201,7 @@ public class InternshipController {
 
         	String content = reviewMap.get("content");
         	reviewMap.remove("content");
+        	
         	Map<String, EReview> EReviewMap = new HashMap<>();
     		reviewMap.forEach((key, value) -> {
     			String subValue = String.valueOf(value.charAt(0));
@@ -218,6 +219,15 @@ public class InternshipController {
     		review.setWorkload(EReviewMap.get("workload"));
     		review.setWouldRecommend(EReviewMap.get("wouldRecommend"));
     		
+    		float averageReview = (
+    				EReviewMap.get("teamCommunication").ordinal() + 1
+    				+ EReviewMap.get("easeOfIntegration").ordinal() + 1
+    				+ EReviewMap.get("mentorship").ordinal() + 1
+					+ EReviewMap.get("subject").ordinal() + 1
+					+ EReviewMap.get("workload").ordinal() + 1
+					+ EReviewMap.get("wouldRecommend").ordinal() + 1) / 6;
+    				
+    		review.setAverageReview(averageReview);
     		this.reviewService.addReview(internship, review);
     	});
     	

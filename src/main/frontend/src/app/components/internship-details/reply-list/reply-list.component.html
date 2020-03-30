@@ -5,7 +5,8 @@
             sur ce stage
         </mat-card-title>
         <mat-card-content style="margin-left: 30px;">
-            <br><br>
+            <br>
+            <h2>Note Globale <span class="badge badge-secondary">{{ review.averageReview }} / 6</span></h2>
             <h4 class="mb-1">{{ review.content }}</h4>
             <br><br>
             <div class="list-inline">
@@ -68,6 +69,9 @@
     </form>
 
     <div class="list-group">
+        <div *ngIf="replies.length == 0" class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1 font-italic">Aucun commentaire n'est associé à cet avis. </h5>
+        </div>
         <div *ngFor="let reply of replies  | paginate: {
             itemsPerPage: 5,
             currentPage: p}; let i = index"
@@ -98,9 +102,8 @@
             </div>
         </div>
     </div>
-    <br><br>
-    <pagination-controls style="text-align: center;" (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
-        autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
-        screenReaderPageLabel="page">
+    <pagination-controls style="text-align: center;" (pageChange)="p = $event" (pageBoundsCorrection)="p = 1"
+        directionLinks="true" autoHide="true" responsive="true" previousLabel="" nextLabel=""
+        screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page">
     </pagination-controls>
 </mat-card-content>
