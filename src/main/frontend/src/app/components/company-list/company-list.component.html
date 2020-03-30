@@ -2,15 +2,19 @@
     <br>
     <h1 id="header">
       Entreprises
-      <span style="width: 100px;"></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-form-field style="font-size: small;">
+        <mat-label>Rechercher une entreprise</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Nom, secteur d'activité... Ex. Aix-Marseille Université">
+      </mat-form-field>
       <a style="float: right" *ngIf="isLoggedIn" mat-raised-button color="primary" routerLink="../add-company">Ajouter une entreprise</a>
     </h1>
     
     <mat-nav-list *ngIf="companies">
-      <mat-list-item style="height: 100px; border-bottom: thin #888888 solid;" *ngFor="let company of companies | paginate: {
+      <mat-list-item style="height: 100px; border-bottom: thin #888888 solid;" *ngFor="let company of displayedCompanies | paginate: {
         itemsPerPage: 5,
         currentPage: p,
-        totalItems: companies.length}">
+        totalItems: displayedCompanies.length}">
         <a matLine [routerLink]="['../company', company.id]">
           <div class="d-flex w-100 justify-content-between">
             <h3 style="font-weight: 200;" class="mb-1">{{ company.name }} - {{ company.industry.name }}</h3>

@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Internship } from '../../models/Internship';
 import { InternshipService } from 'src/app/services/internship.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
