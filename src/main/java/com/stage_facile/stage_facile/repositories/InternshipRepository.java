@@ -29,7 +29,7 @@ public interface InternshipRepository extends CrudRepository<Internship, Long> {
 	 * @param id
 	 * @return Le résultat en question sous forme de liste.
 	 */
-	@Query("SELECT i FROM Internship i WHERE i.user.id=:id")
+	@Query("SELECT i FROM Internship i WHERE i.user.id=:id AND i.validated = true")
 	public Set<Internship> findInternshipsByUserId(@Param("id") Long id);
 
 	/**
