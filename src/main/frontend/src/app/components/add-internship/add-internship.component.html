@@ -25,17 +25,13 @@
       <br>
       <mat-form-field>
         <mat-label>Date de début</mat-label>
-        <input required matInput formControlName="beginDate" [matDatepicker]="beginDate">
-        <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
-        <mat-datepicker #beginDate></mat-datepicker>
+        <input required matInput formControlName="beginDate">
         <mat-error *ngIf="dateCompare()">La date de fin du stage doit être ultérieure à la date de début.</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
         <mat-label>Date de fin</mat-label>
-        <input required matInput formControlName="endDate" [matDatepicker]="endDate">
-        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-        <mat-datepicker #endDate></mat-datepicker>
+        <input required matInput formControlName="endDate">
         <mat-error *ngIf="dateCompare()">La date de fin du stage doit être ultérieure à la date de début.</mat-error>
       </mat-form-field>
       <br>      
@@ -105,10 +101,6 @@
       <div>
         <button *ngIf="internshipInfoFormGroup" [disabled]="internshipInfoFormGroup.invalid" color="primary" mat-button matStepperNext>Passer à la prochaine étape</button>
       </div>
-      <!-- <button mat-raised-button [disabled]="internshipInfoFormGroup.invalid" color="primary" (click)="onSubmit()">{{ title }}</button> -->
     </form>
     <br><br>
-    <div class="alert alert-success" *ngIf="submitted">
-      Votre soumission a été prise en compte. Votre stage sera affiché parmi la liste lorsqu'il sera validé par un enseignant.
-    </div>
   </mat-card-content>

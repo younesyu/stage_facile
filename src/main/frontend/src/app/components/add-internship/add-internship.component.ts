@@ -42,8 +42,14 @@ export class AddInternshipComponent implements OnInit {
 
 
     this.internshipInfoFormGroup = this.fb.group({
-      beginDate: '',
-      endDate: '',
+      beginDate: ['', [
+        Validators.required,
+        Validators.pattern("^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$")
+      ]],
+      endDate: ['', [
+        Validators.required,
+        Validators.pattern("^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$")
+      ]],
       function: '',
       description: '',
       location: '',
@@ -97,11 +103,15 @@ export class AddInternshipComponent implements OnInit {
 
     this.industryService.findAll().subscribe(data => {
       this.industries = data;
-      this.industriesString = data.map(industry => industry.name);
+      this.industriesString = data.map(industry => industry.name).filter(i => !(i.trim() == ""));
     });
 
     this.userService.getLoggedInUser().subscribe(data => {
       this.internshipInfoFormGroup.get('user').setValue(data);
+    });
+
+    this.internshipInfoFormGroup.get('beginDate').valueChanges.subscribe(val => {
+      console.log(val);
     });
   }
 
@@ -127,10 +137,10 @@ export class AddInternshipComponent implements OnInit {
   dateCompare() {
     let beginDate = Date.parse(this.internshipInfoFormGroup.get('beginDate').value);
     let endDate = Date.parse(this.internshipInfoFormGroup.get('endDate').value);
-    
-    if(beginDate - endDate > 0) {
-      this.internshipInfoFormGroup.get('beginDate').setErrors({ valid : false });
-      this.internshipInfoFormGroup.get('endDate').setErrors({ valid : false });
+    console.log(beginDate)
+    if (beginDate - endDate > 0) {
+      this.internshipInfoFormGroup.get('beginDate').setErrors({ valid: false });
+      this.internshipInfoFormGroup.get('endDate').setErrors({ valid: false });
     } else {
       this.internshipInfoFormGroup.get('beginDate').setErrors(null);
       this.internshipInfoFormGroup.get('endDate').setErrors(null);
