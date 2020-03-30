@@ -1,4 +1,37 @@
-<table mat-table [dataSource]="studentsDataSource" matSort class="mat-elevation-z8" style="width: 100%;">
+<div class="container-fluid">
+  <div class="row align-baseline">
+    <h2 class="col" *ngFor="let col of displayedColumnsUsers.slice(0,2)">
+      {{ col }}
+    </h2>
+    <h2 class="col-4" *ngFor="let col of displayedColumnsUsers.slice(2,3)">
+      {{ col }}
+    </h2>
+    <h2 class="col" *ngFor="let col of displayedColumnsUsers.slice(3,displayedColumnsUsers.length)">
+      {{ col }}
+    </h2>
+  </div>
+  <div *ngFor="let student of students | paginate: {
+    itemsPerPage: 15,
+    currentPage: p,
+    totalItems: students.length}" class="row align-baseline">
+    <div class="col non-button-row">{{ student.firstName }}</div>
+    <div class="col non-button-row">{{ student.lastName }}</div>
+    <div class="col-4 non-button-row">{{ student.email }}</div>
+    <div class="col non-button-row"><a [routerLink]="['/profile', student.id]">{{ student.id }}</a></div>
+    <div class="col">
+      <button mat-raised-button color="warn" 
+        (click)="delete(student)">Supprimer</button>
+    </div>
+  </div>
+  <div class="row align-self-center">
+    <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
+    autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page">
+  </pagination-controls>
+  </div>
+</div>
+
+<!-- <table mat-table [dataSource]="studentsDataSource" matSort class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
@@ -27,4 +60,4 @@
   </table>
 
   <mat-paginator *ngIf="students" [length]="students.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
+  </mat-paginator> -->

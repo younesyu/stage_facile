@@ -1,3 +1,21 @@
+<div class="container-fluid">
+  <div class="row align-baseline">
+    <h2 class="col" *ngFor="let col of displayedColumnsAdmins">
+      {{ col }}
+    </h2>
+  </div>
+  <div *ngFor="let row of admins" class="row align-baseline">
+    <div class="col">{{ row.firstName }}</div>
+    <div class="col">{{ row.lastName }}</div>
+    <div class="col">{{ row.email }}</div>
+    <div class="col">{{ row.id }}</div>
+    <div class="col">
+      <button mat-raised-button color="warn" 
+        *ngIf="!self(row)" (click)="delete(row)">Supprimer</button>
+    </div>
+  </div>
+</div>
+<!-- 
 <table mat-table [dataSource]="adminsDataSource" class="mat-elevation-z8" style="width: 100%;">
 
     <ng-container matColumnDef="firstName">
@@ -28,4 +46,4 @@
   </table>
 
   <mat-paginator *ngIf="admins" [length]="admins.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
+  </mat-paginator> -->

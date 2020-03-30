@@ -4,8 +4,27 @@
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Programmation">
 </mat-form-field>
 </div>
+<ul class="list-group">
+  <li class="font-weight-bold list-group-item d-flex justify-content-between align-items-center">
+    Nom du secteur
+    <span class="badge badge-dark">Nombre de stages</span>
+  </li>
+  <li *ngFor="let indCount of industriesCountsToShow | paginate: {
+    itemsPerPage: 5,
+    currentPage: p,
+    totalItems: industriesCountsToShow.length}" class="list-group-item d-flex justify-content-between align-items-center">
+    {{ indCount.name }}
+    <span class="badge badge-dark">{{ indCount.count }}</span>
+  </li>
+</ul>
+<div class="pagination-controls" class="text-align: center;">
+  <pagination-controls (pageChange)="p = $event" (pageBoundsCorrection)="p = 1" directionLinks="true"
+    autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page">
+  </pagination-controls>
+</div>
 
-<table #table mat-table [dataSource]="industriesCountsToShow" class="mat-elevation-z8" style="width: 100%;">
+<!-- <table mat-table [dataSource]="dataSource" MatSort class="mat-elevation-z8" style="width: 100%;">
 
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Nom du secteur </th>
@@ -19,5 +38,5 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumnsIndustries"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumnsIndustries;"></tr>
 </table>
-<mat-paginator #paginator *ngIf="industriesCountsToShow" [length]="industriesCountsToShow.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-</mat-paginator>
+<mat-paginator *ngIf="industriesCountsToShow" [length]="industriesCountsToShow.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator> -->

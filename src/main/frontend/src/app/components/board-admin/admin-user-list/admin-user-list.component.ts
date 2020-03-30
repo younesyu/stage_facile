@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserService } from 'src/app/services/user.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -13,13 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AdminUserListComponent implements OnInit {
   students: User[];
-  studentsDataSource: MatTableDataSource<User>;
-
-
-  displayedColumnsUsers: string[] = ['firstName', 'lastName', 'email', 'delete'];
-  
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  p = 1;
+  displayedColumnsUsers: string[] = ['Prénom', 'Nom', 'Adresse électronique', 'Profil', 'Supprimer'];
 
   constructor(private userService: UserService,
     private tokenStorage: TokenStorageService) { }
@@ -28,8 +22,6 @@ export class AdminUserListComponent implements OnInit {
     this.userService.findStudents().subscribe(
       data => {
         this.students = data;
-        this.studentsDataSource = new MatTableDataSource(this.students);
-        this.studentsDataSource.paginator = this.paginator;
       });
   }
 

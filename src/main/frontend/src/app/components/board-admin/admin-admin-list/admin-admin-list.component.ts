@@ -13,20 +13,14 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class AdminAdminListComponent implements OnInit {
   admins: User[];
-  displayedColumnsAdmins: string[] = ['firstName', 'lastName', 'email', 'delete'];
-  adminsDataSource: MatTableDataSource<User>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  displayedColumnsAdmins: string[] = ['Prénom', 'Nom', 'Email', 'Profil', 'Supprimer'];
 
   constructor(private userService: UserService,
     private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.userService.findAdmins().subscribe(
-      data => {
+    this.userService.findAdmins().subscribe(data => {
         this.admins = data;
-        this.adminsDataSource = new MatTableDataSource(this.admins);
-        this.adminsDataSource.sort = this.sort;
       });
   }
 
