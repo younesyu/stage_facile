@@ -5,9 +5,9 @@ import { CompanyService } from 'src/app/services/company.service';
 import { Company } from 'src/app/models/Company';
 import { Industry } from 'src/app/models/Industry';
 import { IndustryService } from 'src/app/services/industry.service';
-import { InternshipService } from 'src/app/services/internship.service';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-internship',
@@ -33,6 +33,7 @@ export class AddInternshipComponent implements OnInit {
   experienceLevels: string[];
   wayOfFinding: string[];
   companiesString: string[];
+  filteredCompaniesString: Observable<string[]>;
   industriesString: string[];
 
   constructor(public fb: FormBuilder,
@@ -99,6 +100,12 @@ export class AddInternshipComponent implements OnInit {
     this.companyService.findAll().subscribe(data => {
       this.companies = data;
       this.companiesString = data.map(company => company.name);
+
+      this.filteredCompaniesString = this.internshipInfoFormGroup.get('company').valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
     });
 
     this.industryService.findAll().subscribe(data => {
@@ -110,9 +117,19 @@ export class AddInternshipComponent implements OnInit {
       this.internshipInfoFormGroup.get('user').setValue(data);
     });
 
-    this.internshipInfoFormGroup.get('beginDate').valueChanges.subscribe(val => {
-      console.log(val);
-    });
+    this.internshipInfoFormGroup.get('company').valueChanges.subscribe(input => {
+      if (!this.companiesString.includes(input)) {
+        this.internshipInfoFormGroup.get('company').setErrors({
+          valid: false
+        });
+      }
+      else {
+          this.internshipInfoFormGroup.get('company').setErrors({
+            valid: true
+          });
+        }
+      });
+
   }
 
   get conventionReference() {
@@ -137,7 +154,6 @@ export class AddInternshipComponent implements OnInit {
   dateCompare() {
     let beginDate = Date.parse(this.internshipInfoFormGroup.get('beginDate').value);
     let endDate = Date.parse(this.internshipInfoFormGroup.get('endDate').value);
-    console.log(beginDate)
     if (beginDate - endDate > 0) {
       this.internshipInfoFormGroup.get('beginDate').setErrors({ valid: false });
       this.internshipInfoFormGroup.get('endDate').setErrors({ valid: false });
@@ -147,5 +163,11 @@ export class AddInternshipComponent implements OnInit {
     }
 
     return (beginDate - endDate > 0)
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.companiesString.filter(option => option.toLowerCase().includes(filterValue));
   }
 }
