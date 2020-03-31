@@ -21,6 +21,7 @@ import { CompanyEditComponent } from './components/add-company/company-edit/comp
 import { InternshipFormComponent } from './components/internship-form/internship-form.component';
 import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
 import { LoadComponent } from './helpers/load/load.component';
+import { EditInternshipFormComponent } from './components/internship-form/edit-internship-form/edit-internship-form.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'add-internship', component: InternshipFormComponent },
   { path: 'add-company', component: AddCompanyComponent },
   { path: 'internship/:id', component: InternshipDetailsComponent },
-  { path: 'internship/edit/:id', component: InternshipEditComponent },
+  { path: 'internship/edit/:id', component: EditInternshipFormComponent },
   { path: 'company/:id', component: CompanyDetailsComponent },
   { path: 'company/edit/:id', component: CompanyEditComponent },
   { path: 'authenticate', component: AuthentificationComponent },

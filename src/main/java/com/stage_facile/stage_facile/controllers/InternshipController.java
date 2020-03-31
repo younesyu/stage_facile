@@ -223,7 +223,14 @@ public class InternshipController {
     			
     			EReviewMap.put(key, ereview);
     		});
-    		Review review = new Review();
+    		
+    		Review review;
+    		
+    		if(reviewRepository.existsById(internshipIdLong)) {
+    			review = reviewRepository.findById(internshipIdLong).get();
+    		} else {
+        		review = new Review();
+    		}
     		review.setContent(content);
     		review.setTeamCommunication(EReviewMap.get("teamCommunication"));
     		review.setEaseOfIntegration(EReviewMap.get("easeOfIntegration"));

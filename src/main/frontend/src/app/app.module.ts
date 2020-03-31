@@ -70,6 +70,7 @@ import { InternshipFormComponent } from './components/internship-form/internship
 import { ReplyListComponent } from './components/internship-details/reply-list/reply-list.component';
 import { ProfileEditComponent } from './components/profile/profile-edit/profile-edit.component';
 import { LoadComponent } from './helpers/load/load.component';
+import { EditInternshipFormComponent } from './components/internship-form/edit-internship-form/edit-internship-form.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { LoadComponent } from './helpers/load/load.component';
     ReplyListComponent,
     ProfileEditComponent,
     LoadComponent,
+    EditInternshipFormComponent,
   ],
   imports: [
     BrowserModule,

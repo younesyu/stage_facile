@@ -28,7 +28,7 @@ export class AddInternshipComponent implements OnInit {
   /**
    * Valeurs par défaut
    */
-  title = "Ajouter un stage"
+  title = "Fiche de stage"
   countries: string[];
   experienceLevels: string[];
   wayOfFinding: string[];
