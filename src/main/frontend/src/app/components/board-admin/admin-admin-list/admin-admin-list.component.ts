@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserService } from 'src/app/services/user.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletionDialogComponent } from '../../deletion-dialog/deletion-dialog.component';
 
 @Component({
   selector: 'app-admin-admin-list',
@@ -16,12 +18,23 @@ export class AdminAdminListComponent implements OnInit {
   displayedColumnsAdmins: string[] = ['Prénom', 'Nom', 'Email', 'Profil', 'Supprimer'];
 
   constructor(private userService: UserService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userService.findAdmins().subscribe(data => {
         this.admins = data;
       });
+  }  
+  
+  openDialog(user): void {
+    const dialogRef = this.dialog.open(DeletionDialogComponent, {
+      width: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.delete(user);
+    });
   }
 
   delete(user: User) {

@@ -11,7 +11,7 @@
     <div class="col"><a [routerLink]="['/profile', row.id]">{{ row.id }}</a></div>
     <div class="col">
       <button mat-raised-button color="warn" 
-        *ngIf="!self(row)" (click)="delete(row)">Supprimer</button>
+        *ngIf="!self(row)" (click)="openDialog(row)">Supprimer</button>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Supprimer </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="warn" (click)="delete(element)">Supprimer</button>
+        <button mat-raised-button color="warn" (click)="openDialog(element)">Supprimer</button>
       </td>
     </ng-container>
 

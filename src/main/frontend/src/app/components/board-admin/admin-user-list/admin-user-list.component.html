@@ -20,7 +20,7 @@
     <div class="col non-button-row"><a [routerLink]="['/profile', student.id]">{{ student.id }}</a></div>
     <div class="col">
       <button mat-raised-button color="warn" 
-        (click)="delete(student)">Supprimer</button>
+      (click)="openDialog(student)">Supprimer</button>
     </div>
   </div>
   <div class="row align-self-center">
