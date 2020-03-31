@@ -14,35 +14,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoadComponent implements OnInit {
   apiUrl = 'http://localhost:8080/'
 
-  constructor(private http: HttpClient, 
+  constructor(private http: HttpClient,
     private authService: AuthService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.http.get<any>(this.apiUrl + "api/test/omg").subscribe(_ => {
-      this.http.get<any>(this.apiUrl + "internships/load").subscribe(_ => {
-        let admin = {
-          'firstName': 'admin',
-          'lastName': 'admin',
-          'username': 'admin@admin.com',
-          'password': 'admin',
-          'gender': true,
-          'role': 'admin',
-        }
-        this.authService.register(admin).subscribe(_ => {
-          setTimeout(_ => {
+    this.http.get<any>(this.apiUrl + "internships/load").subscribe(_ => {
+      let admin = {
+        'firstName': 'admin',
+        'lastName': 'admin',
+        'username': 'admin@admin.com',
+        'password': 'admin',
+        'gender': true,
+        'role': 'admin',
+      }
+      this.authService.register(admin).subscribe(_ => {
+        setTimeout(_ => {
           console.log(4)
           this.router.navigate(['/']);
-          }, 5000)
-        }, err => {
-          console.log(1)
-          this.router.navigate(['/']);
-        });
+        }, 5000)
       }, err => {
-        console.log(2)
+        console.log(1)
         this.router.navigate(['/']);
       });
     }, err => {
+      console.log(2)
       this.router.navigate(['/']);
     });
   }

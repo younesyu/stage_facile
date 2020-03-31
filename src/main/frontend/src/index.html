@@ -1,19 +1,46 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>test</title>
+  <title>Stage Facile</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
 </head>
+
 <body class="mat-typography">
   <script src="node_modules/chart.js/src/chart.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA5QbJ1u8EW0yW0O9THV4BboLj-2Gjz4qs",
+      authDomain: "stage-facile.firebaseapp.com",
+      databaseURL: "https://stage-facile.firebaseio.com",
+      projectId: "stage-facile",
+      storageBucket: "stage-facile.appspot.com",
+      messagingSenderId: "961619256497",
+      appId: "1:961619256497:web:edc4a7fa3fbe8117bc6e90",
+      measurementId: "G-3VH0CDWP3L"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <app-root></app-root>
 </body>
+
 </html>

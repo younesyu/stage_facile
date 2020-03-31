@@ -32,8 +32,8 @@ import com.stage_facile.stage_facile.models.User;
  */
 public class OdsParser {
 	
-//	private static File iproFile = new File("./classes/StagesExport_1.ods");
-	private static File iproFile = new File("./src/main/resources/StagesExport_1.ods");
+	private static File iproFile = new File("./classes/StagesExport_1.ods");
+//	private static File iproFile = new File("./src/main/resources/StagesExport_1.ods");
 
 	private static Sheet sheet;
 

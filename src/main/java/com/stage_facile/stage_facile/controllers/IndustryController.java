@@ -23,7 +23,7 @@ import com.stage_facile.stage_facile.services.InternshipService;
  * Contrôleur pour l'API secteurs d'activités. 
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/industries")
 public class IndustryController {
 

@@ -22,7 +22,7 @@ import com.stage_facile.stage_facile.services.CompanyService;
  * Contrôleur pour l'API entreprises. 
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/companies")
 public class CompanyController {
 

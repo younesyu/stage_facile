@@ -25,7 +25,7 @@ export class InternshipListComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isConnected = true;
     } else {
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
     }
 
     this.internshipService.findValidated().subscribe(data => {

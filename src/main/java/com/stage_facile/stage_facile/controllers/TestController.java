@@ -15,7 +15,7 @@ import com.stage_facile.stage_facile.models.User;
 import com.stage_facile.stage_facile.repositories.RoleRepository;
 import com.stage_facile.stage_facile.repositories.UserRepository;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/test")
 public class TestController {

@@ -31,7 +31,7 @@ import com.stage_facile.stage_facile.security.services.UserDetailsImpl;
  *
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = { "https://www.stage-facile.firebaseapp.com", "http://localhost:4200" })
 @RequestMapping("/auth")
 public class AuthController {
 	@Autowired

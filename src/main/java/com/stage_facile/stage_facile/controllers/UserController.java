@@ -27,7 +27,7 @@ import com.stage_facile.stage_facile.services.UserService;
  * Contrôleur pour l'API Utilisateur
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/users")
 public class UserController {
      

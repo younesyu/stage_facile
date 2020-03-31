@@ -21,7 +21,7 @@ import com.stage_facile.stage_facile.services.ReviewService;
  * Contrôleur pour l'API Commentaires
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/reviews")
 public class ReviewController {
 
