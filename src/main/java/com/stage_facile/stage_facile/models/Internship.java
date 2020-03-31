@@ -12,15 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.sun.istack.Nullable;
-
-import lombok.Data;
 /**
  * Entité stage.
  * Tout stage est lié à un utilisateur (typiquement un étudiant).
  */
 @Entity
 @Table(name = "internships")
-public @Data class Internship {
+public class Internship {
 	private @Id @GeneratedValue Long id;
 	private @ManyToOne @Nullable User user;
 	private LocalDate beginDate;
@@ -56,6 +54,126 @@ public @Data class Internship {
 		this.validated = validated;
 		this.foundBy = foundBy;
 		this.company = company;
+		this.industry = industry;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public LocalDate getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(LocalDate beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getFunction() {
+		return function;
+	}
+
+	public void setFunction(String function) {
+		this.function = function;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Float getStipend() {
+		return stipend;
+	}
+
+	public void setStipend(Float stipend) {
+		this.stipend = stipend;
+	}
+
+	public Long getConventionReference() {
+		return conventionReference;
+	}
+
+	public void setConventionReference(Long conventionReference) {
+		this.conventionReference = conventionReference;
+	}
+
+	public String getExperienceLevel() {
+		return experienceLevel;
+	}
+
+	public void setExperienceLevel(String experienceLevel) {
+		this.experienceLevel = experienceLevel;
+	}
+
+	public List<String> getManagers() {
+		return managers;
+	}
+
+	public void setManagers(List<String> managers) {
+		this.managers = managers;
+	}
+
+	public Boolean getValidated() {
+		return validated;
+	}
+
+	public void setValidated(Boolean validated) {
+		this.validated = validated;
+	}
+
+	public String getFoundBy() {
+		return foundBy;
+	}
+
+	public void setFoundBy(String foundBy) {
+		this.foundBy = foundBy;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public Industry getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(Industry industry) {
 		this.industry = industry;
 	}
 }

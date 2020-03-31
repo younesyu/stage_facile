@@ -1,16 +1,10 @@
 package com.stage_facile.stage_facile.security.payload.response;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class JwtResponse {
 	private String token; 
 	private String type = "Bearer";
-	@Getter @Setter
 	private Long id;
-	@Getter @Setter
 	private String username;
-	@Getter @Setter
 	private String role;
 	
 	public JwtResponse(String accessToken, Long id, String username, String role) {
@@ -34,5 +28,29 @@ public class JwtResponse {
 
 	public void setTokenType(String tokenType) {
 		this.type = tokenType;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
